@@ -1,0 +1,206 @@
+/* vendas.css */
+
+/* Reset básico e fonte moderna */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #004aad;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Card centralizado com sombra */
+.anuncio-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 700px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.anuncio-card:hover {
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
+}
+
+/* Placeholder de imagem */
+.imagem-placeholder {
+  width: 100%;
+  height: 200px;
+  background: #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.imagem-placeholder:hover {
+  box-shadow: 0 0 15px rgba(0,123,255,0.5);
+  transform: scale(1.02);
+}
+
+.imagem-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagem-placeholder span {
+  position: absolute;
+  color: #555;
+  font-style: italic;
+  z-index: 1;
+  text-align: center;
+  padding: 0 10px;
+}
+
+/* Inputs editáveis */
+.editavel, .info, .preco, .descricao, input, select {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s;
+  font-family: 'Poppins', sans-serif;
+}
+
+.editavel:focus, .info:focus, .preco:focus, .descricao:focus,
+input:focus, select:focus {
+  border-color: #007bff;
+  background-color: #eef6ff;
+}
+
+/* Endereço em linha */
+.endereco {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.endereco input {
+  flex: 1 1 120px;
+}
+
+/* Grid para info e preço */
+.info, .preco {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+/* Botões toggle */
+.quantity-btns button,
+.tags button {
+  padding: 6px 14px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.quantity-btns button.ativo,
+.tags button.ativo {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  box-shadow: 0 2px 5px rgba(0,123,255,0.4);
+}
+
+.quantity-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Área útil */
+.area-inputs {
+  display: flex;
+  gap: 8px;
+}
+
+.area-inputs input {
+  flex: 1;
+}
+
+/* Seções expansíveis */
+.filter-section.expandable {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 8px 12px;
+  cursor: pointer;
+  align-items: center;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.section-header:hover {
+  background: #f1f1f1;
+}
+
+.section-header .toggle {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.filter-section.expandable.open .section-header .toggle {
+  transform: rotate(180deg);
+}
+
+.tags {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+}
+
+.filter-section.expandable.open .tags {
+  display: flex;
+}
+
+/* Botão publicar */
+.btn-publicar {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: background 0.2s;
+}
+
+.btn-publicar:hover {
+  background: #218838;
+}

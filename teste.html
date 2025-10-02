@@ -1,0 +1,190 @@
+<!-- GRID DE LISTAGENS -->
+<section style="margin-bottom:28px">
+  <h3 style="margin-bottom:12px">Imóveis recentes</h3>
+  <div class="grid-list" role="list">
+
+    <article class="listing" role="listitem">
+      <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop" alt="Apartamento sala">
+      <div class="info">
+        <div>
+          <div style="font-weight:700">Apartamento — Pinheiros</div>
+          <div class="meta">2 quartos • 85 m²</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <div class="price">R$ 1.150.000</div>
+          <button 
+            class="btn btn-primary open-hotel" 
+            style="padding:8px 12px;border-radius:10px"
+            data-title="Apartamento — Pinheiros"
+            data-price="R$ 1.150.000"
+            data-location="Pinheiros, São Paulo"
+            data-rooms="2 quartos • 85 m²"
+            data-desc="Apartamento amplo e moderno em Pinheiros, próximo ao metrô e com ótima iluminação natural."
+            data-img="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop"
+          >Ver</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="listing" role="listitem">
+      <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop" alt="Casa fachada">
+      <div class="info">
+        <div>
+          <div style="font-weight:700">Casa — Campo Belo</div>
+          <div class="meta">3 quartos • 210 m²</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <div class="price">R$ 2.350.000</div>
+          <button 
+            class="btn btn-primary open-hotel" 
+            style="padding:8px 12px;border-radius:10px"
+            data-title="Casa — Campo Belo"
+            data-price="R$ 2.350.000"
+            data-location="Campo Belo, São Paulo"
+            data-rooms="3 quartos • 210 m²"
+            data-desc="Casa espaçosa em bairro nobre, com quintal, garagem e excelente infraestrutura ao redor."
+            data-img="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop"
+          >Ver</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="listing" role="listitem">
+      <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop" alt="Chácara">
+      <div class="info">
+        <div>
+          <div style="font-weight:700">Chácara — Mogi</div>
+          <div class="meta">Área 4.200 m²</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <div class="price">R$ 1.100.000</div>
+          <button 
+            class="btn btn-primary open-hotel" 
+            style="padding:8px 12px;border-radius:10px"
+            data-title="Chácara — Mogi"
+            data-price="R$ 1.100.000"
+            data-location="Mogi das Cruzes, SP"
+            data-rooms="Área 4.200 m²"
+            data-desc="Chácara ampla em Mogi das Cruzes, perfeita para lazer ou eventos, com muito espaço verde."
+            data-img="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop"
+          >Ver</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+<dialog id="hotelModal">
+  <div class="modal-head">
+    <h2 id="hotel-title">Título Hotel</h2>
+    <button id="closeModal">✕</button>
+  </div>
+
+  <div class="modal-body">
+    <div class="gallery">
+      <img id="hotel-image" src="" alt="Imagem do hotel">
+    </div>
+
+    <div>
+      <div class="specs">
+        <div class="spec"><b>Preço:</b> <span id="hotel-price"></span></div>
+        <div class="spec"><b>Localização:</b> <span id="hotel-location"></span></div>
+        <div class="spec"><b>Quartos:</b> <span id="hotel-rooms"></span></div>
+        <div class="spec"><b>Avaliação:</b> ⭐⭐⭐⭐☆</div>
+      </div>
+
+      <div style="margin-top:14px">
+        <h3>Descrição</h3>
+        <p id="hotel-desc"></p>
+      </div>
+
+      <form class="contact">
+        <input type="text" placeholder="Seu nome">
+        <input type="tel" placeholder="Telefone">
+        <textarea placeholder="Olá! Tenho interesse neste imóvel. Ainda está disponível?"></textarea>
+        <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+  </div>
+</section>
+
+  
+</main>
+
+<!-- BLOCO: Vantagens -->
+<section class="vantagens">
+  <div class="container vantagens-inner">
+    
+    <!-- Imagem -->
+    <div class="vantagens-img">
+      <img src="https://s2.glbimg.com/cdcRR4VWPjplQG4sEyeG4KWs84s=/620x430/e.glbimg.com/og/ed/f/original/2016/01/12/financiamento-casa-propria.jpg" 
+           alt="Homem tomando café">
+    </div>
+
+    <!-- Texto -->
+    <div class="vantagens-texto">
+      <div class="vantagens-subtitulo">Vantagens de anunciar com a Isamoveis</div>
+      <h2 class="vantagens-titulo">Alugue ou venda seu imóvel com facilidades</h2>
+      <ul class="vantagens-lista">
+        <li>✅ Equipe especializada em vendas e locação de imóveis</li>
+        <li>✅ Exposição garantida para milhares de potenciais clientes</li>
+        <li>✅ Proprietários com Aluguel Garantido recebem em dia, mesmo se o inquilino atrasar</li>
+        <li>✅ Assessoria completa em todo o processo, desde avaliação até assinatura</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- BLOCO: Como funciona -->
+<section class="como-funciona">
+  <div class="container">
+    <div class="como-subtitulo">Entenda o nosso processo</div>
+    <h2 class="como-titulo">Como funciona</h2>
+
+    <div class="como-passos">
+      <div class="passo">
+        <div class="numero">1</div>
+        <h3>Preencha o formulário</h3>
+        <p>Nossa equipe entrará em contato para orientar você da melhor forma.</p>
+      </div>
+      <div class="passo">
+        <div class="numero">2</div>
+        <h3>Conheceremos o imóvel</h3>
+        <p>Com a sua ajuda, buscaremos conhecer melhor seu imóvel visando a venda ou locação.</p>
+      </div>
+      <div class="passo">
+        <div class="numero">3</div>
+        <h3>Avaliamos o mercado</h3>
+        <p>Com base em nossos estudos, buscaremos a melhor oportunidade.</p>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+</section>
+
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div> 
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo" style="width:40px;height:40px;border-radius:8px">Isa</div>
+        <div>
+          <div style="font-weight:700">Isamoveis</div>
+          <div class="small">© 2025 — Todos os direitos reservados</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="small">Ajuda • Sobre • Política de Privacidade</div>
+  </div>
+</footer>

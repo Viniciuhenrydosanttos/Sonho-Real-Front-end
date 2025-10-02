@@ -1,0 +1,380 @@
+    /* =====================
+    RESET & BASE
+    ===================== */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F3EE ;
+    color: #333;
+    }
+
+    /* =====================
+    LAYOUT CONTAINER
+    ===================== */
+    .container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 40px auto;
+    gap: 24px;
+    padding: 0 20px;
+    }
+
+    /* =====================
+    FILTER SIDEBAR
+    ===================== */
+    .filters {
+    flex: 1 1 280px;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .filters h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    }
+
+    .filter-section {
+    margin-bottom: 24px;
+    }
+
+    .filter-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    }
+
+    .filters select,
+    .filter-section input[type="text"],
+    .filter-section input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dcdfe3;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fafafa;
+    transition: border 0.3s;
+    }
+
+    .filter-section input:focus,
+    .filters select:focus {
+    border-color: #007aff;
+    outline: none;
+    }
+
+    .filters select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    }
+
+    /* =====================
+    ÁREA ÚTIL
+    ===================== */
+    .area-inputs {
+    display: flex;
+    gap: 10px;
+    }
+
+    .area-inputs input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    }
+
+    /* =====================
+    TIPO, QUARTOS, TAGS
+    ===================== */
+    .types button,
+    .quantity-btns button,
+    .filter-section .tags button {
+    margin: 5px 5px 0 0;
+    padding: 8px 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    }
+
+    .types button:hover,
+    .quantity-btns button:hover,
+    .filter-section .tags button:hover {
+    background-color: #007aff;
+    color: #fff;
+    border-color: #7A8C99 ;
+    }
+
+    /* =====================
+    TAGS EXPANSÍVEIS
+    ===================== */
+    .filter-section.expandable .tags {
+    margin-top: 8px;
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+    }
+
+    .filter-section.expandable.expanded .tags {
+    display: flex;
+    }
+
+    .section-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    }
+
+    .section-header .toggle {
+    font-weight: bold;
+    font-size: 14px;
+    }
+
+    /* =====================
+    RESULTADOS
+    ===================== */
+    .results {
+    flex: 3 1 700px;
+    }
+
+    .result-count {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #444;
+    }
+
+    .card {
+    display: flex;
+    background: #ffffff;
+    border-color: #B0B0B0;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    margin-bottom: 24px;
+    transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+    transform: scale(1.01);
+    }
+
+    .card img {
+    width: 300px;
+    object-fit: cover;
+    }
+
+    .card .info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
+    .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #222;
+    }
+
+    .card p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 12px;
+    }
+
+    .card strong {
+    font-size: 18px;
+    color: #007aff;
+    margin-bottom: 14px;
+    }
+
+    .card button {
+    align-self: flex-start;
+    padding: 10px 16px;
+    background: #007aff;
+    color: B0B0B0;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    }
+
+    .card button:hover {
+    background: #005fc4;
+    }
+
+    /* =====================
+    MODAL TIPO DE IMÓVEL
+    ===================== */
+    .more-types-toggle {
+    margin-top: 8px;
+    font-weight: bold;
+    }
+
+    .more-types-toggle a {
+    text-decoration: underline;
+    color: #333;
+    cursor: pointer;
+    }
+
+    .more-types-toggle .plus {
+    color: #e60023;
+    margin-right: 6px;
+    }
+
+    .modal-tipo {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    }
+
+    .modal-tipo.hidden {
+    transform: translateX(100%);
+    }
+
+    .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    }
+
+    .modal-header h3 {
+    font-size: 18px;
+    }
+
+    .modal-header .close {
+    font-size: 20px;
+    color: #e60023;
+    cursor: pointer;
+    }
+
+    .modal-body h4 {
+    margin: 18px 0 8px;
+    font-weight: 600;
+    font-size: 15px;
+    }
+
+    .tipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    }
+
+    .tipo-card {
+    background-color: #f6f6f6;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    }
+
+    .tipo-card:hover {
+    border-color: #007aff;
+    background-color: #eaf3ff;
+    }
+
+    /* =====================
+    RESPONSIVO
+    ===================== */
+    @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .card {
+        flex-direction: column;
+    }
+
+    .card img {
+        width: 100%;
+    }
+
+    .modal-tipo {
+        width: 100%;
+    }
+    }
+    .site-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: transparent; /* transparente */
+    box-shadow: none;              /* sem linha/sombra */
+    z-index: 999;
+    padding: 10px 20px;
+    backdrop-filter: blur(6px);    /* opcional: leve desfoque de fundo */
+    }
+
+    .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    }
+
+    .logo img {
+    height: 40px;
+    }
+
+    .nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #2E2E2E ;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+    color: #0077cc;
+    }
+
+    body {
+    padding-top: 70px; /* para o conteúdo não ficar escondido atrás do header */
+    }
+.btn-filtrar {
+  width: 100%;
+  padding: 12px;
+  background-color: #d92323; /* vermelho imobiliária */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-filtrar:hover {
+  background-color: #b81d1d;
+}
