@@ -1,494 +1,918 @@
+/* =============================== 
+   🎨 Paleta de cores e variáveis
+================================== */
 :root {
-            --primary: #4CAF50;
-            --primary-hover: #45a049;
-            --accent-1: #FF6B6B;
-            --accent-2: #FFA500;
-            --background: #F7F7F7;
-            --modal-bg: #ffffff;
-            --text-color: #333333;
-            --muted: #777777;
-            --input-bg: #f1f1f1;
-            --input-border: #ddd;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--background);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background-color: #FDF6EC;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .brand h1 {
-            font-size: 16px;
-            margin: 0;
-        }
-
-        .brand div {
-            font-size: 12px;
-            color: var(--muted);
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text-color);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(0,0,0,0.05);
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        #closeAuth:hover {
-  color: #FF6B6B;
-} */
-/* Ajuste para o modal principal */
-.main#authModal {
-  display: flex !important;
+  --bg: #F4F1EC;         
+  --card: #FFFFFF;       
+  --muted: #2E2E2E;      
+  --accent: #1F3A5F;     
+  --accent-2: #C9A86A;   
+  --cta: linear-gradient(135deg, var(--accent), var(--accent-2));
+  --glass: rgba(255, 255, 255, 0.6);
+  --shadow: 0 10px 30px rgba(18, 23, 21, 0.08);
+  --radius: 14px;
 }
-        /* Hero Section */
-        .hero {
-            padding: 60px 0;
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
-        }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
+/* ===============================
+   🔄 Reset e base
+================================== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--muted);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: inherit; text-decoration: none; }
 
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
+/* ===============================
+   📦 Container padrão
+================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
-        .hero-sub {
-            font-size: 1.1rem;
-            color: var(--muted);
-            margin-bottom: 30px;
-        }
+/* ===============================
+   🏠 Header
+================================== */
+header {
+  background: transparent;
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(6px);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--cta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.brand h1 { font-size: 18px; margin: 0; }
+nav { display: flex; align-items: center; gap: 14px; }
+nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
 
-        .search {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+/* ===============================
+   🎯 Botões
+================================== */
+.btn { padding: 9px 14px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; }
+.btn-ghost { background: transparent; border: 1px solid rgba(0,0,0,0.06); color: var(--muted); }
+.btn-primary { background: var(--cta); color: white; box-shadow: 0 6px 18px rgba(31,58,95,0.18); }
 
-        .search select, .search input {
-            padding: 12px 15px;
-            border: 1px solid var(--input-border);
-            border-radius: 8px;
-            font-size: 14px;
-        }
+/* ===============================
+   🌟 Hero Section
+================================== */
+.hero {
+  margin-top: 6px;
+  padding: 56px 0 80px;
+  background:
+    radial-gradient(600px 160px at 10% 10%, rgba(31,58,95,0.08), transparent 10%),
+    radial-gradient(700px 180px at 95% 5%, rgba(201,168,106,0.06), transparent 10%);
+  clip-path: polygon(0 0,100% 0,100% 89%,0 100%);
+}
+.hero-grid { display: grid; grid-template-columns: 1fr 480px; gap: 36px; align-items: center; }
+.hero-title { font-size: 34px; font-weight: 700; color: var(--accent); margin-bottom: 14px; }
+.hero-sub { color: var(--muted); margin-bottom: 22px; }
 
-        .search select {
-            flex: 0 0 150px;
+/* Search bar */
+.search {
+  display: flex; gap: 8px; align-items: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+  padding: 12px; border-radius: 12px; box-shadow: var(--shadow);
+}
+.search select, .search input { border: 0; padding: 10px; border-radius: 8px; font-size: 14px; background: transparent; outline: none; }
+.search input { flex: 1; }
+.search .go {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--cta);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
 
-        }
+/* Hero card */
+.hero-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.45));
+  border-radius: 22px;
+  padding: 8px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-image { width: 100%; height: 260px; overflow: hidden; border-radius: 18px; }
+.hero-image img { width: 100%; height: 100%; object-fit: cover; }
 
-        .search input {
-            flex: 1;
-        }
+/* ===============================
+   📂 Categorias
+================================== */
+.categories { margin: 48px 0; }
+.categories h2 { font-size: 20px; margin-bottom: 18px; }
+.cat-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+.cat {
+  min-width: 170px; flex: 1 1 220px;
+  background: var(--card);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  transition: transform .18s;
+}
+.cat:hover { transform: translateY(-6px); }
+.cat-icon {
+  width: 56px; height: 56px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,var(--accent),var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700;
+}
 
-        .go {
-            padding: 12px 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-        }
+/* ===============================
+   🖼 Destaques / Carousel
+================================== */
+.section { margin: 46px 0; padding: 28px; border-radius: 16px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8)); box-shadow: var(--shadow); }
+.section h3 { margin: 0 0 18px 0; }
+.carousel { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+.card {
+  flex: 0 0 300px;
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(12,20,16,0.06);
+  scroll-snap-align: start;
+}
+.card img { width: 100%; height: 180px; object-fit: cover; }
+.card-body { padding: 14px; }
+.card h4 { margin: 0 0 8px; font-size: 16px; }
+.meta { color: var(--muted); font-size: 13px; }
 
-        .hero-card {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
+/* ===============================
+   📋 Grid de Listagens
+================================== */
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+  padding: 0 12px;
+}
 
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+.listing {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        /* Grid de Listagens */
-        .grid-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
+.listing:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
 
-        .listing {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
+/* ========================
+   GRID DE IMAGENS DO IMÓVEL
+======================== */
+/* ======================== GRID DE IMAGENS DO IMÓVEL ======================== */
+.listing .grid-imagens {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  width: 100%;
+  height: 220px; /* Ajuste de altura para as imagens */
+}
 
-        .listing:hover {
-            transform: translateY(-5px);
-        }
+.listing .grid-imagens img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem cobrir o container sem distorcer */
+  object-position: center; /* Centraliza a imagem */
+  transition: transform 0.5s ease; /* Adiciona uma transição suave para o zoom */
+}
 
-        .listing img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+/* Ao passar o mouse, aumenta o zoom mantendo a imagem centralizada */
+.listing:hover .grid-imagens img {
+  transform: scale(1.5); /* Ajuste o valor conforme o nível de zoom desejado */
+}
 
-        .info {
-            padding: 20px;
-        }
+/* ============================== RESPONSIVO ============================== */
+@media (max-width: 768px) {
+  .listing .grid-imagens {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+  }
 
-        .meta {
-            font-size: 14px;
-            color: var(--muted);
-            margin-top: 5px;
-        }
+  .listing .img-principal {
+    grid-row: auto;
+  }
+}
+/* ========================
+   INFO DO CARD
+======================== */
+.listing .info {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-        .price {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--primary);
-        }
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+.price {  
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-2);
+}
 
-        /* Modal de Detalhes */
-        #hotelModal {
-            width: 90%;
-            max-width: 800px;
-            border: none;
-            border-radius: 12px;
-            padding: 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+/* ========================
+   BOTÃO “VER MAIS”
+======================== */
+.open-hotel {
+  background: var(--accent-2);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: transform 0.2s, background 0.2s;
+}
 
-        #hotelModal::backdrop {
-            background: rgba(0,0,0,0.5);
-        }
+.open-hotel:hover {
+  transform: scale(1.05);
+  background: var(--accent);
+}
+/* ===============================
+   GRID INTERNO DO CARD
+================================== */
+.grid-container {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  align-items: flex-start;
+  flex-wrap: wrap; /* permite ajustar em telas menores */
+}
 
-        .modal-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
+.grid-large {
+  flex: 2;
+  min-width: 180px;
+  max-height: 220px; /* Essa altura pode ser ajustada conforme a tela */
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
 
-        .modal-head h2 {
-            font-size: 24px;
-        }
+.grid-large img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.5s ease;
+}
 
-        #closeModal {
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
+.grid-large img:hover {
+  transform: scale(1.15); /* aumenta mais para perceber */
+}
+/* Duas imagens menores à direita */
+.grid-small {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px; /* Ajuste para permitir flexibilidade nas imagens */
+}
+.grid-small img {
+  width: 100%;
+  height: calc(50% - 4px); /* divide igualmente a altura das duas imagens */
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
 
-        .modal-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 20px;
-        }
+.grid-small img:hover {
+  transform: scale(1.05);
+}
 
-        .gallery img {
-            width: 100%;
-            border-radius: 8px;
-        }
+/* Informações do imóvel */
+.info {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-        .specs {
-            margin-bottom: 20px;
-        }
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
 
-        .spec {
-            margin-bottom: 10px;
-        }
+.price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-2);
+}
 
-        .contact {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
+.btn.open-hotel {
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-        .contact input, .contact textarea {
-            padding: 12px 15px;
-            border: 1px solid var(--input-border);
-            border-radius: 8px;
-            font-size: 14px;
-        }
+/* ===============================
+   RESPONSIVO
+================================== */
+@media (max-width: 768px) {
+  .grid-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .grid-large, .grid-small {
+    max-height: 200px;
+  }
+  .grid-small img {
+    height: 100px;
+  }
+}
 
-        .contact textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
+/* ========================
+   MODAL DO IMÓVEL
+======================== */
+#hotelModal {
+  width: 90%;
+  max-width: 800px;
+  padding: 16px;
+  border-radius: 16px;
+}
 
-        /* Seção Vantagens */
-        .vantagens {
-            padding: 60px 0;
-            background: white;
-        }
+#hotel-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: opacity 0.3s ease;
+}
 
-        .vantagens-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
+#hotel-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-left: 16px;
+  flex-direction: column;
+  max-height: 200px;
+  overflow: hidden;
+}
 
-        .vantagens-img img {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
+#hotel-thumbs img.thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: transform 0.2s, border 0.2s;
+}
 
-        .vantagens-subtitulo {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
+#hotel-thumbs img.thumb:hover {
+  transform: scale(1.05);
+  border: 2px solid var(--accent-2);
+}
 
-        .vantagens-titulo {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
+.thumbs-wrapper {
+  display: flex;
+  gap: 8px;
+  transition: transform 0.3s ease;
+}
 
-        .vantagens-lista {
-            list-style: none;
-        }
+.thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
-        .vantagens-lista li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
+.thumb-nav {
+  background: rgba(0,0,0,0.2);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 8px;
+  border-radius: 4px;
+}
 
-        .vantagens-lista li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
+/* ========================
+   RESPONSIVO
+======================== */
+@media (max-width: 768px) {
+  .listing .grid-imagens {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+  }
 
-        /* Seção Como Funciona */
-        .como-funciona {
-            padding: 60px 0;
-            background: #f8f9fa;
-        }
+  .listing .img-principal {
+    grid-row: auto;
+  }
+}
 
-        .como-subtitulo {
-            text-align: center;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
 
-        .como-titulo {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
 
-        .como-passos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
+/* ===============================
+   📌 Footer
+================================== */
+footer { margin-top: 44px; padding: 36px 0; background: transparent; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.small { color: var(--muted); font-size: 13px; }
 
-        .passo {
-            text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
+/* ===============================
+   ✨ Vantagens
+================================== */
+.vantagens { background: #f7f7f7; padding: 60px 0; }
+.vantagens-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
+.vantagens-img { flex: 1; min-width: 280px; text-align: center; }
+.vantagens-img img { width: 100%; max-width: 350px; border-radius: 20px; object-fit: cover; }
+.vantagens-texto { flex: 1; min-width: 280px; }
+.vantagens-subtitulo { color: var(--accent-2); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.vantagens-titulo { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
+.vantagens-lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 15px; }
 
-        .numero {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 20px;
-        }
+/* ===============================
+   ✨ Como Funciona
+================================== */
+.como-funciona { padding: 60px 0; text-align: center; }
+.como-subtitulo { color: var(--accent-2); font-size: 14px; margin-bottom: 8px; }
+.como-titulo { font-size: 28px; font-weight: 700; margin-bottom: 40px; }
+.como-passos { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+.passo { flex: 1; min-width: 220px; max-width: 250px; }
+.numero {
+  width: 50px; height: 50px;
+  border: 2px solid var(--accent-2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+.passo h3 { font-size: 18px; margin-bottom: 8px; }
+.passo p { font-size: 14px; color: #666; }
 
-        .passo h3 {
-            margin-bottom: 15px;
-        }
+/* ===============================
+   ✨ Modais de login e cadastro
+================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+.modal {
+    background-color: var(--card);
+    border-radius: var(--radius);
+    width: 360px; max-width: 90%;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    position: relative;
+    animation: scaleIn 0.3s ease forwards;
+}
+@keyframes scaleIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-header h2 { font-size: 22px; font-weight: 700; color: var(--accent); }
+.modal-close {
+    background: transparent;  
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.2s ease;
+}
+.modal-close:hover { color: var(--accent-2); }
+.modal form { display: flex; flex-direction: column; gap: 12px; }
+.modal form input { padding: 10px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; }
+.modal form button { width: 100%; }
 
-        /* Footer */
-        footer {
-            background: #343a40;
-            color: white;
-            padding: 40px 0;
-        }
+/* ===============================
+   ✨ Modal deslizante de imóveis
+================================== */
+.modal-imovel {
+    position: fixed; top: 0; right: -400px;
+    width: 400px; height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    display: flex; flex-direction: column;
+    z-index: 9999;
+    transition: right 0.3s ease;
+}
+.modal-imovel.ativo { right: 0; }
+.modal-imovel .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--accent-2); border-bottom: 1px solid #ddd; }
+.modal-imovel .modal-header h3 { margin: 0; font-size: 18px; }
+.modal-imovel .modal-header .close { cursor: pointer; font-size: 20px; }
+.modal-imovel .modal-body { padding: 16px; overflow-y: auto; }
+.modal-imovel .modal-body p { margin-bottom: 10px; }
 
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* ===============================
+   📱 Responsividade
+================================== */
+@media (max-width:1000px) {
+  .hero-grid { grid-template-columns: 1fr 360px; }
+  .hero-image { height: 220px; }
+  .grid-list { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:720px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 18px; }
+  .hero-image { height: 200px; }
+  .grid-list { grid-template-columns: 1fr; }
+  nav { display: none; }
+  .container { padding: 0 16px; }
+}
+.signupModal {
+  border: none;
+  padding: 0;
+  border-radius: 16px;
+  width: 850px;
+  max-width: 95%;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.25);
+}
 
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
+.signupModal::backdrop {
+  background: rgba(0,0,0,0.6);
+}
 
-        .small {
-            font-size: 14px;
-            color: #adb5bd;
-        }
+.signupModal-container {
+  display: flex;
+  width: 100%;
+  min-height: 500px;
+  overflow: hidden;
+  border-radius: 16px;
+}
 
-        /* Responsividade */
-        @media (max-width: 992px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .vantagens-inner {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-body {
-                grid-template-columns: 1fr;
-            }
-        }
+/* Coluna esquerda */
+.welcome-box {
+  flex: 1;
+  background: linear-gradient(135deg, #2E2E2E , #C9A86A );
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  transition: background 0.6s ease;
+}
 
-        @media (max-width: 768px) {
-            .header-inner {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            nav {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .search {
-                flex-direction: column;
-            }
-            
-            .search select {
-                flex: 1;
-            }
-            
-            .como-passos {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-inner {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-        }
+.welcome-box h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
 
-        @media (max-width: 500px) {
-            #authModal .container {
-                padding: 20px 15px;
-            }
+.welcome-box p {
+  max-width: 220px;
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-            .form_title {
-                font-size: 20px;
-            }
+.btn-register {
+  background: #E5D39F;
+  color: #C9A86A;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.btn-register:hover {
+  transform: scale(1.05);
+}
 
-            .form__input {
-                padding: 10px 12px;
-            }
+/* Coluna direita */
+.form-box {
+  flex: 1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
 
-            .form__button {
-                padding: 10px;
-                font-size: 14px;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-            }
-        }
-        /* Fundo escuro atrás do modal */
+/* Formularios */
+.form {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 80%;
+  max-width: 300px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.form.active {
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.form h2 {
+  margin-bottom: 20px;
+  color: #1f3a5f;
+}
+
+.form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.options a {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-login {
+  background: #E5D39F;
+  color: #1f3a5f;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: all 0.3s;
+}
+.btn-login:hover {
+  background: #2E2E2E ;
+}.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.user-profile span.username {
+  font-weight: 700;
+  font-size: 16px;
+  color: #0ff; /* azul neon */
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+}
+
+.user-profile button.logout {
+  background: #ff0055;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.user-profile button.logout:hover {
+  background: #ff3388;
+  box-shadow: 0 0 10px #ff3388;
+}/* ======== Modal principal ======== */
+.hotel-modal {
+  width: 95%;
+  max-width: 980px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+  position: relative;
+  animation: modalFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* Fundo escuro */
+.hotel-modal::backdrop {
+  background: rgba(0,0,0,0.6);
+}
+
+/* Conteúdo */
+.hotel-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ======== Galeria ======== */
+.hotel-gallery {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 12px;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.main-image {
+  width: 100%;
+  height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(31, 58, 95, 0.15);
+}
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.main-image img:hover {
+  transform: scale(1.15);
+}
+
+
+.side-images {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.side-images img {
+  width: 100%;
+  height: 110px;
+  border-radius: 12px;
+  cursor: pointer;
+  object-fit: cover;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.side-images img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(31, 58, 95, 0.25);
+}
+
+/* ======== Informações do hotel ======== */
+.hotel-info {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hotel-info h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.hotel-info .address {
+  font-size: 15px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hotel-info .price {
+  font-size: 24px;
+  color: var(--accent-2);
+  font-weight: 700;
+}
+
+.hotel-info .details {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #555;
+}
+
+.hotel-info .details span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ======== Botões ======== */
+.hotel-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.btn-visita {
+  flex: 1;
+  background: var(--cta);
+  color: #fff;
+  border: none;
+  padding: 14px 0;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-visita:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(31,58,95,0.3);
+}
+
+/* ======== Botão de fechar ======== */
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(31,58,95,0.8);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.close-btn:hover {
+  background: var(--accent);
+  transform: scale(1.1);
+}
+
+/* ======== Responsividade ======== */
+@media (max-width: 900px) {
+  .hotel-gallery {
+    grid-template-columns: 1fr;
+  }
+  .main-image { height: 300px; }
+  .side-images {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+  .side-images img {
+    height: 90px;
+    flex: 0 0 auto;
+  }
+}
+@media (max-width: 600px) {
+  .hotel-modal { padding: 12px; }
+  .hotel-info h2 { font-size: 22px; }
+  .hotel-info .price { font-size: 20px; }
+}
+
+
+/* ======== Responsividade ======== */
+@media (max-width: 900px) {
+  .hotel-gallery {
+    grid-template-columns: 1fr;
+  }
+  .main-image {
+    height: 300px;
+  }
+  .side-images {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .side-images img {
+    height: 90px;
+    flex: 0 0 auto;
+  }
+}
+
+
 

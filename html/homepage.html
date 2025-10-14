@@ -1,13 +1,13 @@
-  <!DOCTYPE html>
-  <html lang="pt-BR">
-  <head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Imobiliária — Layout Moderno</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/teste.css">
-  </head>
-  <body>  
+</head>
+<body>  
 
   <header>
     <div class="container header-inner">
@@ -23,49 +23,49 @@
         <a href="../html/anuncio.html">Comprar</a>
         <a href="#">Lançamentos</a>
         <a href="../html/anuncio.html">Anunciar</a>
-        <button id="btn-signup" class="btn btn-primary" style="margin-left:6px">Login</button>
+        <div id="userProfile" class="user-profile">
+          <button id="btn-signup" class="btn btn-primary">Login</button>
+        </div>
       </nav>
     </div>
   </header>
 
-<dialog id="signupModal" class="signupModal">
-  <div class="signupModal-container">
-    
-    <!-- Caixa da esquerda -->
-    <div class="welcome-box">
-      <h2 id="welcomeTitle">Welcome</h2>
-      <p id="welcomeText">Join Our Unique Platform, Explore a New Experience</p>
-      <button id="toggleBtn" class="btn-register">REGISTER</button>
+  <!-- MODAL DE LOGIN / CADASTRO -->
+  <dialog id="signupModal" class="signupModal">
+    <div class="signupModal-container">
+      <!-- Caixa da esquerda -->
+      <div class="welcome-box">
+        <h2 id="welcomeTitle">Welcome</h2>
+        <p id="welcomeText">Join Our Unique Platform, Explore a New Experience</p>
+        <button id="toggleBtn" class="btn-register">REGISTER</button>
+      </div>
+
+      <!-- Caixa da direita -->
+      <div class="form-box">
+        <!-- Formulário Login -->
+        <form id="loginForm" class="form active">
+          <h2>Sign In</h2>
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <div class="options">
+            <label><input type="checkbox"> Remember me</label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn-login">LOGIN</button>
+        </form>
+
+        <!-- Formulário Criar Conta -->
+        <form id="registerForm" class="form">
+          <h2>Create Account</h2>
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <input type="password" placeholder="Password" required>
+          <input type="password" placeholder="Confirm Password" required>
+          <button type="submit" class="btn-login">REGISTER</button>
+        </form>
+      </div>
     </div>
-
-    <!-- Caixa da direita -->
-    <div class="form-box">
-      <!-- Formulário Login -->
-      <form id="loginForm" class="form active">
-        <h2>Sign In</h2>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <div class="options">
-          <label><input type="checkbox"> Remember me</label>
-          <a href="#">Forgot password?</a>
-        </div>
-        <button type="submit" class="btn-login">LOGIN</button>
-      </form>
-
-      <!-- Formulário Criar Conta -->
-      <form id="registerForm" class="form">
-        <h2>Create Account</h2>
-        <input type="text" placeholder="Name" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <input type="password" placeholder="Confirm Password" required>
-        <button type="submit" class="btn-login">REGISTER</button>
-      </form>
-    </div>
-  </div>
-</dialog>
-
-
+  </dialog>
 
   <main>
     <!-- HERO -->
@@ -100,136 +100,143 @@
         </div>
       </div>
     </section>
-  <!-- GRID DE LISTAGENS -->
-  <section style="margin-bottom:28px">
-    <h3 style="margin-bottom:12px">Imóveis recentes</h3>
-    <div class="grid-list" role="list">
 
-      <article class="listing" role="listitem">
-        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop" alt="Apartamento sala">
-        <div class="info">
-          <div>
-            <div style="font-weight:700">Apartamento — Pinheiros</div>
-            <div class="meta">2 quartos • 85 m²</div>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-            <div class="price">R$ 1.150.000</div>
-            <button 
-              class="btn btn-primary open-hotel" 
-              style="padding:8px 12px;border-radius:10px"
-              data-title="Apartamento — Pinheiros"
-              data-price="R$ 1.150.000"
-              data-location="Pinheiros, São Paulo"
-              data-rooms="2 quartos • 85 m²"
-              data-desc="Apartamento amplo e moderno em Pinheiros, próximo ao metrô e com ótima iluminação natural."
-              data-img="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop"
-            >Ver</button>
-          </div>
-        </div>
-      </article>
+    <!-- GRID DE LISTAGENS -->
+    <section style="margin-bottom:28px">
+      <h3 style="margin-bottom:12px">Imóveis recentes</h3>
+      <div class="grid-list" role="list">
 
-      <article class="listing" role="listitem">
-        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop" alt="Casa fachada">
-        <div class="info">
-          <div>
-            <div style="font-weight:700">Casa — Campo Belo</div>
-            <div class="meta">3 quartos • 210 m²</div>
+        <article class="listing" role="listitem">
+          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop" alt="Apartamento sala">
+          <div class="info">
+            <div>
+              <div style="font-weight:700">Apartamento — Pinheiros</div>
+              <div class="meta">2 quartos • 85 m²</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div class="price">R$ 1.150.000</div>
+              <button 
+                class="btn btn-primary open-hotel" 
+                style="padding:8px 12px;border-radius:10px"
+                data-title="Apartamento — Pinheiros"
+                data-price="R$ 1.150.000"
+                data-location="Pinheiros, São Paulo"
+                data-rooms="2 quartos • 85 m²"
+                data-desc="Apartamento amplo e moderno em Pinheiros, próximo ao metrô e com ótima iluminação natural."
+                data-img="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop"
+              >Ver</button>
+            </div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-            <div class="price">R$ 2.350.000</div>
-            <button 
-              class="btn btn-primary open-hotel" 
-              style="padding:8px 12px;border-radius:10px"
-              data-title="Casa — Campo Belo"
-              data-price="R$ 2.350.000"
-              data-location="Campo Belo, São Paulo"
-              data-rooms="3 quartos • 210 m²"
-              data-desc="Casa espaçosa em bairro nobre, com quintal, garagem e excelente infraestrutura ao redor."
-              data-img="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop"
-            >Ver</button>
+        </article>
+
+        <article class="listing" role="listitem">
+          <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop" alt="Casa fachada">
+          <div class="info">
+            <div>
+              <div style="font-weight:700">Casa — Campo Belo</div>
+              <div class="meta">3 quartos • 210 m²</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div class="price">R$ 2.350.000</div>
+              <button 
+                class="btn btn-primary open-hotel" 
+                style="padding:8px 12px;border-radius:10px"
+                data-title="Casa — Campo Belo"
+                data-price="R$ 2.350.000"
+                data-location="Campo Belo, São Paulo"
+                data-rooms="3 quartos • 210 m²"
+                data-desc="Casa espaçosa em bairro nobre, com quintal, garagem e excelente infraestrutura ao redor."
+                data-img="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop"
+              >Ver</button>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <article class="listing" role="listitem">
-        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop" alt="Chácara">
-        <div class="info">
-          <div>
-            <div style="font-weight:700">Chácara — Mogi</div>
-            <div class="meta">Área 4.200 m²</div>
+        <article class="listing" role="listitem">
+          <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop" alt="Chácara">
+          <div class="info">
+            <div>
+              <div style="font-weight:700">Chácara — Mogi</div>
+              <div class="meta">Área 4.200 m²</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div class="price">R$ 1.100.000</div>
+              <button 
+                class="btn btn-primary open-hotel" 
+                style="padding:8px 12px;border-radius:10px"
+                data-title="Chácara — Mogi"
+                data-price="R$ 1.100.000"
+                data-location="Mogi das Cruzes, SP"
+                data-rooms="Área 4.200 m²"
+                data-desc="Chácara ampla em Mogi das Cruzes, perfeita para lazer ou eventos, com muito espaço verde."
+                data-img="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop"
+              >Ver</button>
+            </div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-            <div class="price">R$ 1.100.000</div>
-            <button 
-              class="btn btn-primary open-hotel" 
-              style="padding:8px 12px;border-radius:10px"
-              data-title="Chácara — Mogi"
-              data-price="R$ 1.100.000"
-              data-location="Mogi das Cruzes, SP"
-              data-rooms="Área 4.200 m²"
-              data-desc="Chácara ampla em Mogi das Cruzes, perfeita para lazer ou eventos, com muito espaço verde."
-              data-img="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop"
-            >Ver</button>
-          </div>
-        </div>
-      </article>
+        </article>
 
-    </div>
-  </section>
-
-  <!-- MODAL -->
-  <dialog id="hotelModal">
-    <div class="modal-head">
-      <h2 id="hotel-title">Título Hotel</h2>
-      <button id="closeModal">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <div class="gallery">
-        <img id="hotel-image" src="" alt="Imagem do hotel">
       </div>
+    </section>
 
-      <div>
-        <div class="specs">
-          <div class="spec"><b>Preço:</b> <span id="hotel-price"></span></div>
-          <div class="spec"><b>Localização:</b> <span id="hotel-location"></span></div>
-          <div class="spec"><b>Quartos:</b> <span id="hotel-rooms"></span></div>
-          <div class="spec"><b>Avaliação:</b> ⭐⭐⭐⭐☆</div>
+    <!-- MODAL DE VISUALIZAÇÃO NOVO -->
+    <dialog id="hotelModal" class="hotel-modal" aria-labelledby="hotel-title" aria-modal="true">
+      <div class="hotel-wrap">
+        <button id="closeModal" class="hotel-close" aria-label="Fechar">✕</button>
+
+        <div class="hotel-body">
+          <!-- GALERIA -->
+          <div class="hotel-gallery">
+            <div class="hotel-main">
+              <img id="hotel-image" src="img/padrao.jpg" alt="Imagem do imóvel">
+              <div class="gallery-controls">
+                <button id="prevImg" class="gbtn" aria-label="Anterior">‹</button>
+                <button id="nextImg" class="gbtn" aria-label="Próxima">›</button>
+              </div>
+            </div>
+            <div class="hotel-thumbs" id="hotel-thumbs">
+              <div id="thumbs-wrapper" class="thumbs-wrapper"></div>
+              <button id="prev-thumb" class="thumb-nav">‹</button>
+              <button id="next-thumb" class="thumb-nav">›</button>
+
+              <!-- miniaturas via JS -->
+            </div>
+          </div>
+
+          <!-- INFORMAÇÕES -->
+          <div class="hotel-info">
+            <h2 id="hotel-title">Nome do Imóve    l</h2>
+            <div class="hotel-meta">
+              <div id="hotel-location">Localização</div>
+              <div id="hotel-rooms">Quartos / Banheiros</div>
+            </div>
+            <p id="hotel-desc">Descrição detalhada do imóvel...</p>
+
+            <div class="hotel-footer">
+              <div class="hotel-price" id="hotel-price">R$ 0,00</div>
+              <div class="hotel-actions">
+                <button id="btn-solicitar" class="btn btn-primary">Solicitar visita</button>
+                <button id="btn-mensagem" class="btn-outline">Mensagem</button>
+              </div>
+            </div>
+
+            <!-- mapa/resumo pequeno -->
+            <div class="hotel-smallmap" id="hotel-smallmap" aria-hidden="true">
+              <span>📍 Endereço (mapa reduzido)</span>
+            </div>
+          </div>
         </div>
-
-        <div style="margin-top:14px">
-          <h3>Descrição</h3>
-          <p id="hotel-desc"></p>
-        </div>
-
-        <form class="contact">
-          <input type="text" placeholder="Seu nome">
-          <input type="tel" placeholder="Telefone">
-          <textarea placeholder="Olá! Tenho interesse neste imóvel. Ainda está disponível?"></textarea>
-          <button type="submit" class="btn btn-primary">Enviar mensagem</button>
-        </form>
       </div>
-    </div>
-  </dialog>
+    </dialog>
 
-
-    </div>
-  </section>
-
-    
   </main>
 
   <!-- BLOCO: Vantagens -->
   <section class="vantagens">
     <div class="container vantagens-inner">
-      
-      <!-- Imagem -->
       <div class="vantagens-img">
         <img src="https://s2.glbimg.com/cdcRR4VWPjplQG4sEyeG4KWs84s=/620x430/e.glbimg.com/og/ed/f/original/2016/01/12/financiamento-casa-propria.jpg" 
-            alt="Homem tomando café">
+             alt="Homem tomando café">
       </div>
-
-      <!-- Texto -->
       <div class="vantagens-texto">
         <div class="vantagens-subtitulo">Vantagens de anunciar com a Isamoveis</div>
         <h2 class="vantagens-titulo">Alugue ou venda seu imóvel com facilidades</h2>
@@ -240,7 +247,6 @@
           <li>✅ Assessoria completa em todo o processo, desde avaliação até assinatura</li>
         </ul>
       </div>
-
     </div>
   </section>
 
@@ -249,7 +255,6 @@
     <div class="container">
       <div class="como-subtitulo">Entenda o nosso processo</div>
       <h2 class="como-titulo">Como funciona</h2>
-
       <div class="como-passos">
         <div class="passo">
           <div class="numero">1</div>
@@ -268,11 +273,6 @@
         </div>
       </div>
     </div>
-
-
-    </div>
-  </section>
-
   </section>
 
   <footer>
@@ -282,16 +282,14 @@
           <div class="logo" style="width:40px;height:40px;border-radius:8px">Isa</div>
           <div>
             <div style="font-weight:700">Isamoveis</div>
-            <div class="small">© 2025 — Todos os direito  s reservados</div>
+            <div class="small">© 2025 — Todos os direitos reservados</div>
           </div>
         </div>
       </div>
-
       <div class="small">Ajuda • Sobre • Política de Privacidade</div>
     </div>
   </footer>
 
-  <script src="../js/"></script>
-  </body>
-
-  </html>
+  <script src="../js/teste.js"></script>
+</body>
+</html>

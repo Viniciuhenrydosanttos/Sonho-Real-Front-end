@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== Elementos principais =====
-  const uploadInput = document.getElementById("fileInput"); // id correto
+  const uploadInput = document.getElementById("fileInput");
   const preview = document.getElementById("preview");
   const placeholderText = document.getElementById("placeholderText");
-  const btnPublicar = document.querySelector(".btn-publicar");
 
   let base64String = "";
   const TAMANHO_MAXIMO_MB = 2;
@@ -11,21 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== 1️⃣ Preview da imagem e conversão para Base64 =====
   if (uploadInput) {
-    uploadInput.addEventListener("change", function (event) {
+    uploadInput.addEventListener("change", (event) => {
       const file = event.target.files[0];
       if (!file) return;
 
       if (file.size > TAMANHO_MAXIMO_BYTES) {
         alert(`A imagem é muito grande! Limite: ${TAMANHO_MAXIMO_MB}MB.`);
-        preview.src = "";
+        preview.style.display = "none";
         uploadInput.value = "";
         return;
       }
 
       const reader = new FileReader();
-      reader.onload = function () {
-        base64String = reader.result;
-        preview.src = base64String;
+      reader.onload = () => {
+        base64String = reader.result.replace(/^data:.+;base64,/, ""); // remove o prefixo base64
+        preview.src = reader.result;
         preview.style.display = "block";
         if (placeholderText) placeholderText.style.display = "none";
       };
@@ -34,71 +32,113 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== 2️⃣ Função publicar =====
-  window.publicar = async function() {
+  window.publicar = async function () {
     if (!base64String) {
       alert("Escolha uma imagem primeiro!");
       return;
     }
 
+    const foto = {
+      nome: uploadInput.files[0].name,
+      mimetype: uploadInput.files[0].type,
+      data: base64String,
+    };
+
+    // 🔹 Primeiro envia a foto
     try {
-      const nome_casa = document.querySelector(".editavel")?.innerText.trim() || "";
-      const preco = parseFloat(document.getElementById("preco")?.value || "0") || 0;
-      const rua = document.getElementById("rua")?.value || "";
-      const bairro = document.getElementById("bairro")?.value || "";
-      const numero = document.getElementById("numero")?.value || "";
-      const cidade = document.getElementById("cidade")?.value || "";
-      const estado = document.getElementById("estado")?.value || "";
-      const area_total = parseInt(document.getElementById("areaAte")?.value || "0", 10);
-      const quartos = document.querySelectorAll(".quantity-btns button.ativo")?.length || 0;
-      const banheiros = parseInt(document.getElementById("banheiros")?.value || "0", 10);
-      const vagas_garagem = parseInt(document.getElementById("vagas")?.value || "0", 10);
-      const disponibilidade = document.getElementById("disponibilidade")?.value || "Disponível";
-
-      const imovel = {
-        nome_casa,
-        tipo_moradia: "Apartamento",
-        finalidade: "Venda",
-        preco,
-        rua,
-        bairro,
-        numero,
-        cidade,
-        estado,
-        area_total,
-        quartos,
-        banheiros,
-        vagas_garagem,
-        disponibilidade,
-        foto: base64String
-      };
-
-      const response = await fetch("http://192.168.1.4:3000/imovel/cadastrar", {
+      const response = await fetch("http://localhost:3000/fotos_casa", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(imovel)
+        body: JSON.stringify(foto),
+      });
+
+      if (!response.ok) throw new Error("Erro ao enviar foto");
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+
+      console.log("📸 Foto enviada com sucesso:", data);
+    } catch (error) {
+      console.error("❌ Erro no envio da foto:", error.message);
+      alert("Falha ao enviar foto. Tente novamente.");
+      return;
+    }
+
+    // 🔹 Depois envia o imóvel
+    const nome_casa = document.querySelector(".titulo")?.innerText.trim() || "";
+    const preco = parseFloat(document.getElementById("preco")?.value || "0") || 0;
+    const rua = document.getElementById("rua")?.value || "";
+    const bairro = document.getElementById("bairro")?.value || "";
+    const numero = document.getElementById("numero")?.value || "";
+    const cidade = document.getElementById("cidade")?.value || "";
+    const estado = document.getElementById("estado")?.value || "";
+    const area_total = parseInt(document.getElementById("areaAte")?.value || "0", 10);
+    const quartos = document.querySelectorAll(".quantity-btns button.ativo")?.length || 0;
+    const banheiros = parseInt(document.getElementById("banheiros")?.value || "0", 10);
+    const vagas_garagem = parseInt(document.getElementById("vagas")?.value || "0", 10);
+    const disponibilidade = document.getElementById("disponibilidade")?.value || "Disponível";
+
+    if (!nome_casa || !rua || !preco || !cidade || !estado) {
+      alert("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
+    const imovel = {
+      nome_casa,
+      tipo_moradia: "Apartamento",
+      finalidade: "Venda",
+      preco,
+      rua,
+      bairro,
+      numero,
+      cidade,
+      estado,
+      area_total,
+      quartos,
+      banheiros,
+      vagas_garagem,
+      disponibilidade,
+      foto: base64String, // opcional, se quiser salvar também no cadastro
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/imovel/cadastrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(imovel),
       });
 
       if (!response.ok) throw new Error("Erro ao cadastrar imóvel");
-      const data = await response.json();
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
 
       alert("✅ Imóvel cadastrado com sucesso!");
-      console.log("Resposta:", data);
+      console.log("🏠 Resposta:", data);
 
-      // Limpa formulário
+      // Resetar formulário
       base64String = "";
-      preview.src = "";
+      preview.style.display = "none";
       uploadInput.value = "";
       if (placeholderText) placeholderText.style.display = "block";
-
     } catch (err) {
       console.error(err);
       alert("❌ Erro ao cadastrar imóvel. Veja o console.");
     }
   };
 
-  window.toggleAtivo = function(btn) { btn.classList.toggle("ativo"); }
+  // ===== 3️⃣ Funções de interface =====
+  window.toggleAtivo = (btn) => btn.classList.toggle("ativo");
 
-  window.toggleSection = function(header) {
+  window.toggleSection = (header) => {
     const section = header.parentElement;
     const tags = section.querySelector(".tags");
     const toggleIcon = header.querySelector(".toggle");
