@@ -1,6 +1,4 @@
-/* =============================== 
-   🎨 Paleta de cores e variáveis
-================================== */
+
 :root {
   --bg: #F4F1EC;         
   --card: #FFFFFF;       
@@ -13,9 +11,7 @@
   --radius: 14px;
 }
 
-/* ===============================
-   🔄 Reset e base
-================================== */
+
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
@@ -29,18 +25,13 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 
-/* ===============================
-   📦 Container padrão
-================================== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* ===============================
-   🏠 Header
-================================== */
+
 header {
   background: transparent;
   padding: 18px 0;
@@ -62,21 +53,87 @@ header {
   color: white;
   font-weight: 700;
   box-shadow: var(--shadow);
+.profile-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  width: 180px;
+  overflow: hidden;
+}
+
+.dropdown.active {
+  display: flex;
+}
+
+.dropdown button {
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background: #f1f1f1;
+}
+
+/* Modal Favoritos */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 350px;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}
 }
 .brand h1 { font-size: 18px; margin: 0; }
 nav { display: flex; align-items: center; gap: 14px; }
 nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
 
-/* ===============================
-   🎯 Botões
-================================== */
+
 .btn { padding: 9px 14px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; }
 .btn-ghost { background: transparent; border: 1px solid rgba(0,0,0,0.06); color: var(--muted); }
 .btn-primary { background: var(--cta); color: white; box-shadow: 0 6px 18px rgba(31,58,95,0.18); }
 
-/* ===============================
-   🌟 Hero Section
-================================== */
+
 .hero {
   margin-top: 6px;
   padding: 56px 0 80px;
@@ -120,9 +177,7 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
 .hero-image { width: 100%; height: 260px; overflow: hidden; border-radius: 18px; }
 .hero-image img { width: 100%; height: 100%; object-fit: cover; }
 
-/* ===============================
-   📂 Categorias
-================================== */
+
 .categories { margin: 48px 0; }
 .categories h2 { font-size: 20px; margin-bottom: 18px; }
 .cat-grid { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -147,9 +202,7 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
   color: white; font-weight: 700;
 }
 
-/* ===============================
-   🖼 Destaques / Carousel
-================================== */
+
 .section { margin: 46px 0; padding: 28px; border-radius: 16px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8)); box-shadow: var(--shadow); }
 .section h3 { margin: 0 0 18px 0; }
 .carousel { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
@@ -166,9 +219,7 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
 .card h4 { margin: 0 0 8px; font-size: 16px; }
 .meta { color: var(--muted); font-size: 13px; }
 
-/* ===============================
-   📋 Grid de Listagens
-================================== */
+
 .grid-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -178,60 +229,41 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
 }
 
 .listing {
-  background: var(--card);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-direction: column; /* se quiser que a imagem fique em cima */
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
 }
-
 .listing:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* ========================
-   GRID DE IMAGENS DO IMÓVEL
-======================== */
-/* ======================== GRID DE IMAGENS DO IMÓVEL ======================== */
+
 .listing .grid-imagens {
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
   width: 100%;
-  height: 220px; /* Ajuste de altura para as imagens */
+  height: 220px; 
 }
 
 .listing .grid-imagens img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Faz a imagem cobrir o container sem distorcer */
-  object-position: center; /* Centraliza a imagem */
-  transition: transform 0.5s ease; /* Adiciona uma transição suave para o zoom */
+  object-fit: cover; 
+  object-position: center; 
+  transition: transform 0.5s ease; 
 }
 
-/* Ao passar o mouse, aumenta o zoom mantendo a imagem centralizada */
 .listing:hover .grid-imagens img {
-  transform: scale(1.5); /* Ajuste o valor conforme o nível de zoom desejado */
+  transform: scale(1.5); 
 }
 
-/* ============================== RESPONSIVO ============================== */
-@media (max-width: 768px) {
-  .listing .grid-imagens {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    height: auto;
-  }
 
-  .listing .img-principal {
-    grid-row: auto;
-  }
-}
-/* ========================
-   INFO DO CARD
-======================== */
 .listing .info {
   padding: 16px;
   flex: 1;
@@ -246,15 +278,13 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
   align-items: center;
   margin-top: 8px;
 }
+
 .price {  
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--accent-2);
 }
 
-/* ========================
-   BOTÃO “VER MAIS”
-======================== */
 .open-hotel {
   background: var(--accent-2);
   color: #fff;
@@ -269,54 +299,50 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
   transform: scale(1.05);
   background: var(--accent);
 }
-/* ===============================
-   GRID INTERNO DO CARD
-================================== */
+
+
 .grid-container {
   display: flex;
   gap: 12px;
   padding: 12px 16px;
-  align-items: flex-start;
-  flex-wrap: wrap; /* permite ajustar em telas menores */
+  align-items: stretch; /* faz os filhos ocuparem a mesma altura */
 }
 
+/* Wrapper de zoom para imagens principais */
+/* Wrapper de imagens grandes */
 .grid-large {
-  flex: 2;
-  min-width: 180px;
-  max-height: 220px; /* Essa altura pode ser ajustada conforme a tela */
+  width: 100%;
+  height: 200px; /* altura menor ou maior pra ajustar o retângulo */
   overflow: hidden;
-  border-radius: 12px;
-  position: relative;
+  border-radius: 12px 12px 0 0;
 }
 
 .grid-large img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
   transition: transform 0.5s ease;
 }
+
 
 .grid-large img:hover {
   transform: scale(1.15); /* aumenta mais para perceber */
 }
+
 /* Duas imagens menores à direita */
 .grid-small {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 220px; /* Ajuste para permitir flexibilidade nas imagens */
-}
-.grid-small img {
-  width: 100%;
-  height: calc(50% - 4px); /* divide igualmente a altura das duas imagens */
-  object-fit: cover;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
 }
 
+.grid-small img {
+  flex: 1; /* faz cada imagem ocupar metade da altura disponível */
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
 .grid-small img:hover {
   transform: scale(1.05);
 }
@@ -347,22 +373,6 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
-}
-
-/* ===============================
-   RESPONSIVO
-================================== */
-@media (max-width: 768px) {
-  .grid-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .grid-large, .grid-small {
-    max-height: 200px;
-  }
-  .grid-small img {
-    height: 100px;
-  }
 }
 
 /* ========================
@@ -430,33 +440,12 @@ nav a { color: var(--muted); font-weight: 600; font-size: 14px; }
   border-radius: 4px;
 }
 
-/* ========================
-   RESPONSIVO
-======================== */
-@media (max-width: 768px) {
-  .listing .grid-imagens {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    height: auto;
-  }
-
-  .listing .img-principal {
-    grid-row: auto;
-  }
-}
-
-
-
-/* ===============================
-   📌 Footer
-================================== */
 footer { margin-top: 44px; padding: 36px 0; background: transparent; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .small { color: var(--muted); font-size: 13px; }
 
-/* ===============================
    ✨ Vantagens
-================================== */
+
 .vantagens { background: #f7f7f7; padding: 60px 0; }
 .vantagens-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
 .vantagens-img { flex: 1; min-width: 280px; text-align: center; }
@@ -466,9 +455,7 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
 .vantagens-titulo { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
 .vantagens-lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 15px; }
 
-/* ===============================
-   ✨ Como Funciona
-================================== */
+
 .como-funciona { padding: 60px 0; text-align: center; }
 .como-subtitulo { color: var(--accent-2); font-size: 14px; margin-bottom: 8px; }
 .como-titulo { font-size: 28px; font-weight: 700; margin-bottom: 40px; }
@@ -486,9 +473,7 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
 .passo h3 { font-size: 18px; margin-bottom: 8px; }
 .passo p { font-size: 14px; color: #666; }
 
-/* ===============================
-   ✨ Modais de login e cadastro
-================================== */
+
 .modal-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -524,14 +509,20 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
     color: var(--muted);
     transition: color 0.2s ease;
 }
-.modal-close:hover { color: var(--accent-2); }
-.modal form { display: flex; flex-direction: column; gap: 12px; }
-.modal form input { padding: 10px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; }
+.modal-close:hover 
+{ color: var(--accent-2); }
+.modal form 
+{ display: flex; 
+flex-direction: 
+column; gap: 12px; }
+.modal form input {
+   padding: 10px 12px; 
+   border-radius: 8px; 
+   border: 1px solid #ccc; 
+   font-size: 14px; }
 .modal form button { width: 100%; }
 
-/* ===============================
-   ✨ Modal deslizante de imóveis
-================================== */
+
 .modal-imovel {
     position: fixed; top: 0; right: -400px;
     width: 400px; height: 100%;
@@ -548,21 +539,6 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
 .modal-imovel .modal-body { padding: 16px; overflow-y: auto; }
 .modal-imovel .modal-body p { margin-bottom: 10px; }
 
-/* ===============================
-   📱 Responsividade
-================================== */
-@media (max-width:1000px) {
-  .hero-grid { grid-template-columns: 1fr 360px; }
-  .hero-image { height: 220px; }
-  .grid-list { grid-template-columns: repeat(2,1fr); }
-}
-@media (max-width:720px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 18px; }
-  .hero-image { height: 200px; }
-  .grid-list { grid-template-columns: 1fr; }
-  nav { display: none; }
-  .container { padding: 0 16px; }
-}
 .signupModal {
   border: none;
   padding: 0;
@@ -719,7 +695,7 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
 .user-profile button.logout:hover {
   background: #ff3388;
   box-shadow: 0 0 10px #ff3388;
-}/* ======== Modal principal ======== */
+}
 .hotel-modal {
   width: 95%;
   max-width: 980px;
@@ -744,7 +720,6 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
   font-family: 'Poppins', sans-serif;
 }
 
-/* ======== Galeria ======== */
 .hotel-gallery {
   display: grid;
   grid-template-columns: 2.5fr 1fr;
@@ -789,7 +764,13 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
   box-shadow: 0 4px 16px rgba(31, 58, 95, 0.25);
 }
 
-/* ======== Informações do hotel ======== */
+.hotel-card-info {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px;
+  gap: 16px;
+background-color: var(--accent-2);
+}
 .hotel-info {
   padding: 28px 32px;
   display: flex;
@@ -830,7 +811,6 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
   gap: 6px;
 }
 
-/* ======== Botões ======== */
 .hotel-actions {
   display: flex;
   gap: 16px;
@@ -853,7 +833,6 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
   box-shadow: 0 6px 20px rgba(31,58,95,0.3);
 }
 
-/* ======== Botão de fechar ======== */
 .close-btn {
   position: absolute;
   top: 14px;
@@ -873,7 +852,6 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
   transform: scale(1.1);
 }
 
-/* ======== Responsividade ======== */
 @media (max-width: 900px) {
   .hotel-gallery {
     grid-template-columns: 1fr;
@@ -894,25 +872,4 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
   .hotel-info h2 { font-size: 22px; }
   .hotel-info .price { font-size: 20px; }
 }
-
-
-/* ======== Responsividade ======== */
-@media (max-width: 900px) {
-  .hotel-gallery {
-    grid-template-columns: 1fr;
-  }
-  .main-image {
-    height: 300px;
-  }
-  .side-images {
-    flex-direction: row;
-    overflow-x: auto;
-  }
-  .side-images img {
-    height: 90px;
-    flex: 0 0 auto;
-  }
-}
-
-
 

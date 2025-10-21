@@ -13,9 +13,7 @@ function fecharModalTipo() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ---------------------------
-  // Elementos do DOM
-  // ---------------------------
+  
   const estadoSelect = document.getElementById("estado");
   const cidadeSelect = document.getElementById("cidade");
   const localizacaoInput = document.querySelector('[placeholder="Digite bairro, rua ou cidade"]');
@@ -27,9 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultCount = document.querySelector(".result-count");
   const btnFiltrar = document.querySelector(".btn-filtrar");
 
-  // ---------------------------
-  // Armazena filtros
-  // ---------------------------
+ 
 let filtros = {
   estado: "",
   cidade: "",
@@ -45,8 +41,7 @@ let filtros = {
   vagas_garagem: "",
   disponibilidade: ""
 };
-  // ---------------------------
-  // Eventos de filtro
+  
   // ---------------------------
   estadoSelect.addEventListener("change", () => {
     filtros.estado = estadoSelect.value;
@@ -66,7 +61,6 @@ let filtros = {
 
   tipoBotoes.forEach(btn => {
     btn.addEventListener("click", () => {
-      // Remove active de todos
       btn.parentElement.querySelectorAll("button").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       filtros.tipo_moradia = btn.textContent;
@@ -89,10 +83,7 @@ let filtros = {
     });
   });
 
-  // ---------------------------
-  // Função de fetch e render
-  // ---------------------------
-  async function fetchImoveis() {
+    async function fetchImoveis() {
     try {
       const params = new URLSearchParams();
 
@@ -136,13 +127,9 @@ let filtros = {
     resultCount.textContent = `${imoveis.length} imóveis encontrados`;
   }
 
-  // ---------------------------
-  // Evento do botão filtrar
-  // ---------------------------
+  
   btnFiltrar.addEventListener("click", fetchImoveis);
 
-  // ---------------------------
-  // Carrega todos os imóveis inicialmente
-  // ---------------------------
+  
   fetchImoveis();
 });
