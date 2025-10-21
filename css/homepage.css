@@ -446,14 +446,20 @@ footer { margin-top: 44px; padding: 36px 0; background: transparent; }
 
    ✨ Vantagens
 
-.vantagens { background: #f7f7f7; padding: 60px 0; }
-.vantagens-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
-.vantagens-img { flex: 1; min-width: 280px; text-align: center; }
-.vantagens-img img { width: 100%; max-width: 350px; border-radius: 20px; object-fit: cover; }
-.vantagens-texto { flex: 1; min-width: 280px; }
-.vantagens-subtitulo { color: var(--accent-2); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-.vantagens-titulo { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
-.vantagens-lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 15px; }
+.vantagens { background: #f7f7f7; padding: 60px 0; 
+display: flex; flex-wrap: wrap; align-items: center; gap: 40px; 
+  flex: 1; min-width: 280px; text-align: center; 
+ width: 100%; max-width: 350px; border-radius: 20px; object-fit: cover; 
+ flex: 1; min-width: 280px; 
+ color: var(--accent-2); 
+ font-size: 14px; 
+ font-weight: 500; margin-bottom: 8px; 
+ list-style: none; 
+ padding: 0;
+  margin: 0;
+  display: grid; 
+  gap: 8px; 
+  font-size: 15px; }
 
 
 .como-funciona { padding: 60px 0; text-align: center; }
@@ -711,15 +717,6 @@ column; gap: 12px; }
 .hotel-modal::backdrop {
   background: rgba(0,0,0,0.6);
 }
-
-/* Conteúdo */
-.hotel-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  font-family: 'Poppins', sans-serif;
-}
-
 .hotel-gallery {
   display: grid;
   grid-template-columns: 2.5fr 1fr;
@@ -764,13 +761,18 @@ column; gap: 12px; }
   box-shadow: 0 4px 16px rgba(31, 58, 95, 0.25);
 }
 
-.hotel-card-info {
+.hotel-card {
   display: flex;
   flex-direction: column;
   padding: 24px 32px;
   gap: 16px;
-background-color: var(--accent-2);
+  background: #fff;
+  border-left: 6px solid var(--accent-2);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .hotel-info {
   padding: 28px 32px;
   display: flex;
