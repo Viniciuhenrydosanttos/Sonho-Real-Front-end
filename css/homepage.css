@@ -761,24 +761,19 @@ column; gap: 12px; }
   box-shadow: 0 4px 16px rgba(31, 58, 95, 0.25);
 }
 
-.hotel-card {
-  display: flex;
-  flex-direction: column;
-  padding: 24px 32px;
-  gap: 16px;
-  background: #fff;
-  border-left: 6px solid var(--accent-2);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+
 
 .hotel-info {
-  padding: 28px 32px;
+  padding: 24px 28px; 
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px; 
+  background-color: var(--accent-2);
+  border-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
+
 
 .hotel-info h2 {
   font-size: 28px;
