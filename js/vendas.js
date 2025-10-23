@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const reader = new FileReader();
       reader.onload = () => {
-        base64String = reader.result.replace(/^data:.+;base64,/, ""); // remove o prefixo base64
+        base64String = reader.result.replace(/^data:.+;base64,/, "");
         preview.src = reader.result;
         preview.style.display = "block";
         if (placeholderText) placeholderText.style.display = "none";
@@ -54,14 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) throw new Error("Erro ao enviar foto");
 
-      let data;
-      try {
-        data = await response.json();
-      } catch {
-        data = null;
-      }
-
-      console.log("📸 Foto enviada com sucesso:", data);
+      console.log("📸 Foto enviada com sucesso");
     } catch (error) {
       console.error("❌ Erro no envio da foto:", error.message);
       alert("Falha ao enviar foto. Tente novamente.");
@@ -87,6 +80,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // 🔹 Captura checkboxes e converte para "Sim"/"Não"
+    const camposCheckbox = [
+      "brinquedoteca","churrasqueira","espaco_gourmet","piscina","playground","salao_festas","salao_jogos",
+      "ar_condicionado","armarios_planejados","elevador","hidromassagem","jardim","lareira","mobilidade","quintal","sauna","varanda"
+    ];
+
+    const imovelCheckbox = {};
+    camposCheckbox.forEach(name => {
+      const el = document.querySelector(`[name="${name}"]`);
+      imovelCheckbox[name] = el?.checked ? "Sim" : "Não";
+    });
+
     const imovel = {
       nome_casa,
       tipo_moradia: "Apartamento",
@@ -102,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
       banheiros,
       vagas_garagem,
       disponibilidade,
-      foto: base64String, // opcional, se quiser salvar também no cadastro
+      foto: base64String,
+      ...imovelCheckbox // adiciona todos os campos "Sim"/"Não"
     };
 
     try {
@@ -114,15 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) throw new Error("Erro ao cadastrar imóvel");
 
-      let data;
-      try {
-        data = await response.json();
-      } catch {
-        data = null;
-      }
-
       alert("✅ Imóvel cadastrado com sucesso!");
-      console.log("🏠 Resposta:", data);
 
       // Resetar formulário
       base64String = "";

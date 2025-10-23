@@ -1,6 +1,5 @@
-    /* =====================
-    RESET & BASE
-    ===================== */
+
+
     * {
     margin: 0;
     padding: 0;
@@ -13,9 +12,7 @@
     color: #333;
     }
 
-    /* =====================
-    LAYOUT CONTAINER
-    ===================== */
+ 
     .container {
     display: flex;
     flex-wrap: wrap;
@@ -25,9 +22,7 @@
     padding: 0 20px;
     }
 
-    /* =====================
-    FILTER SIDEBAR
-    ===================== */
+   
     .filters {
     flex: 1 1 280px;
     background: #ffffff;
@@ -79,9 +74,7 @@
     background-size: 18px;
     }
 
-    /* =====================
-    ÁREA ÚTIL
-    ===================== */
+
     .area-inputs {
     display: flex;
     gap: 10px;
@@ -95,9 +88,6 @@
     font-size: 14px;
     }
 
-    /* =====================
-    TIPO, QUARTOS, TAGS
-    ===================== */
     .types button,
     .quantity-btns button,
     .filter-section .tags button {
@@ -377,4 +367,11 @@
 
 .btn-filtrar:hover {
   background-color: #b81d1d;
+}
+/* Estado ativo (selecionado) */
+button.active,
+.tipo-card.active {
+  background-color: #0066ff;
+  color: #fff;
+  border: 1px solid #004ecc;
 }

@@ -13,7 +13,7 @@
   <main class="container">
     <div class="anuncio-card">
 
-      <!-- Imagem clicável -->
+      <!-- Imagem Principal -->
       <div class="imagem-placeholder" onclick="document.getElementById('fileInput').click()">
         <img id="preview" src="" alt="Clique para adicionar imagem" style="display: none;">
         <span id="placeholderText">Clique para adicionar imagem do imóvel</span>
@@ -23,6 +23,7 @@
       <!-- Miniaturas -->
       <div id="thumbnails" class="thumbnails-container"></div>
 
+      <!-- Título do anúncio -->
       <h2 contenteditable="true" class="titulo">Título do Anúncio (ex: Apartamento à venda)</h2>
 
       <!-- Endereço completo -->
@@ -34,50 +35,23 @@
         <input type="text" id="estado" placeholder="Estado">
       </div>
 
-      <!-- Área útil, quartos, vagas -->
-      <p class="info" contenteditable="true">Área útil, quartos, vagas (ex: 60m² - 3 quartos - 2 vagas)</p>
+      <!-- Área, quartos e vagas -->
+      <div class="info-geral">
+        <input type="number" id="area" placeholder="Área útil (m²)">
+        <input type="number" id="quartos" placeholder="Quartos">
+        <input type="number" id="banheiros" placeholder="Banheiros">
+        <input type="number" id="vagas" placeholder="Vagas de garagem">
+      </div>
 
       <!-- Preço -->
       <div class="filter-section">
-        <label>Preço (R$)</label>
-        <input type="number" id="preco" placeholder="0" min="0" step="0.01">
-      </div>
-
-      <h3>Selecione as características:</h3>
-
-      <!-- Quartos -->
-      <div class="filter-section">
-        <label>Quartos</label>
-        <div class="quantity-btns">
-          <button onclick="toggleAtivo(this)">+1</button>
-          <button onclick="toggleAtivo(this)">+2</button>
-          <button onclick="toggleAtivo(this)">+3</button>
-          <button onclick="toggleAtivo(this)">+4</button>
-        </div>
-      </div>
-
-      <!-- Banheiros e Vagas -->
-      <div class="filter-section">
-        <label>Banheiros</label>
-        <input type="number" id="banheiros" placeholder="Quantidade">
-      </div>
-      <div class="filter-section">
-        <label>Vagas de garagem</label>
-        <input type="number" id="vagas" placeholder="Quantidade">
-      </div>
-
-      <!-- Área útil -->
-      <div class="filter-section">
-        <label>Área útil (m²)</label>
-        <div class="area-inputs">
-          <input type="number" id="areaDe" placeholder="De">
-          <input type="number" id="areaAte" placeholder="Até">
-        </div>
+        <label for="preco">Preço (R$)</label>
+        <input type="number" id="preco" placeholder="0,00" min="0" step="0.01">
       </div>
 
       <!-- Disponibilidade -->
       <div class="filter-section">
-        <label>Disponibilidade</label>
+        <label for="disponibilidade">Disponibilidade</label>
         <select id="disponibilidade">
           <option value="Disponível">Disponível</option>
           <option value="Alugado">Alugado</option>
@@ -85,61 +59,68 @@
         </select>
       </div>
 
-      <!-- Áreas adicionais -->
-      <div class="filter-section expandable">
-        <div class="section-header" onclick="toggleSection(this)">
-          <label>Área de Lazer</label>
-          <span class="toggle">▼</span>
+      <!-- Características adicionais -->
+      <div class="filtros-adicionais">
+
+        <!-- Área de Lazer -->
+        <div class="filter-section expandable">
+          <div class="section-header" onclick="toggleSection(this)">
+            <label>Área de Lazer</label>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="tags">
+            <button type="button" onclick="toggleAtivo(this)">Brinquedoteca</button>
+            <button type="button" onclick="toggleAtivo(this)">Churrasqueira</button>
+            <button type="button" onclick="toggleAtivo(this)">Espaço gourmet</button>
+            <button type="button" onclick="toggleAtivo(this)">Piscina</button>
+            <button type="button" onclick="toggleAtivo(this)">Playground</button>
+            <button type="button" onclick="toggleAtivo(this)">Salão de festas</button>
+            <button type="button" onclick="toggleAtivo(this)">Salão de jogos</button>
+          </div>
         </div>
-        <div class="tags">
-          <button onclick="toggleAtivo(this)">Brinquedoteca</button>
-          <button onclick="toggleAtivo(this)">Churrasqueira</button>
-          <button onclick="toggleAtivo(this)">Espaço gourmet</button>
-          <button onclick="toggleAtivo(this)">Piscina</button>
-          <button onclick="toggleAtivo(this)">Playground</button>
-          <button onclick="toggleAtivo(this)">Salão de festas</button>
-          <button onclick="toggleAtivo(this)">Salão de jogos</button>
+
+        <!-- Conveniências -->
+        <div class="filter-section expandable">
+          <div class="section-header" onclick="toggleSection(this)">
+            <label>Conveniências</label>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="tags">
+            <button type="button" onclick="toggleAtivo(this)">Ar-condicionado</button>
+            <button type="button" onclick="toggleAtivo(this)">Armários Planejados</button>
+            <button type="button" onclick="toggleAtivo(this)">Elevador</button>
+            <button type="button" onclick="toggleAtivo(this)">Jardim</button>
+            <button type="button" onclick="toggleAtivo(this)">Mobilidade</button>
+            <button type="button" onclick="toggleAtivo(this)">Quintal</button>
+            <button type="button" onclick="toggleAtivo(this)">Varanda</button>
+          </div>
         </div>
+
+        <!-- Funcional -->
+        <div class="filter-section expandable">
+          <div class="section-header" onclick="toggleSection(this)">
+            <label>Funcional</label>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="tags">
+            <button type="button" onclick="toggleAtivo(this)">Área de serviço</button>
+            <button type="button" onclick="toggleAtivo(this)">Ático</button>
+            <button type="button" onclick="toggleAtivo(this)">Closet</button>
+            <button type="button" onclick="toggleAtivo(this)">Dependência de Empregada</button>
+            <button type="button" onclick="toggleAtivo(this)">Edícula</button>
+            <button type="button" onclick="toggleAtivo(this)">Escritório</button>
+            <button type="button" onclick="toggleAtivo(this)">Lavabo</button>
+            <button type="button" onclick="toggleAtivo(this)">Lavanderia</button>
+          </div>
+        </div>
+
       </div>
 
-      <div class="filter-section expandable">
-        <div class="section-header" onclick="toggleSection(this)">
-          <label>Conveniências</label>
-          <span class="toggle">▼</span>
-        </div>
-        <div class="tags">
-          <button onclick="toggleAtivo(this)">Ar-condicionado</button>
-          <button onclick="toggleAtivo(this)">Armários Planejados</button>
-          <button onclick="toggleAtivo(this)">Elevador</button>
-          <button onclick="toggleAtivo(this)">Jardim</button>
-          <button onclick="toggleAtivo(this)">Mobilidade</button>
-          <button onclick="toggleAtivo(this)">Quintal</button>
-          <button onclick="toggleAtivo(this)">Varanda</button>
-        </div>
+      <!-- Descrição do imóvel -->
+      <div class="descricao" contenteditable="true" placeholder="Escreva a descrição do imóvel...">
       </div>
 
-      <div class="filter-section expandable">
-        <div class="section-header" onclick="toggleSection(this)">
-          <label>Funcional</label>
-          <span class="toggle">▼</span>
-        </div>
-        <div class="tags">
-          <button onclick="toggleAtivo(this)">Área de serviço</button>
-          <button onclick="toggleAtivo(this)">Ático</button>
-          <button onclick="toggleAtivo(this)">Closet</button>
-          <button onclick="toggleAtivo(this)">Dependência de Empregada</button>
-          <button onclick="toggleAtivo(this)">Edícula</button>
-          <button onclick="toggleAtivo(this)">Escritório</button>
-          <button onclick="toggleAtivo(this)">Lavabo</button>
-          <button onclick="toggleAtivo(this)">Lavanderia</button>
-        </div>
-      </div>
-
-      <!-- Descrição -->
-      <div class="descricao" contenteditable="true">
-        Clique aqui para escrever a descrição do imóvel...
-      </div>
-
+      <!-- Botão de publicação -->
       <button class="btn-publicar" onclick="publicar()">Publicar Anúncio</button>
     </div>
   </main>
