@@ -89,24 +89,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Busca os imóveis
-      const res = await fetch(`http://192.168.1.14:3000/imoveis?${params.toString()}`);
+      const res = await fetch(`http://192.168.1.44:3000/imoveis?${params.toString()}`);
       if (!res.ok) throw new Error("Falha ao conectar ao servidor");
 
       const imoveis = await res.json();
 
-      // Para cada imóvel, busca suas fotos (em Base64)
-      const imoveisComFotos = await Promise.all(imoveis.map(async (imovel) => {
-        try {
-          const resImg = await fetch(`http://192.168.1.14:3000/fotos_casa?id_imovel=${imovel.id_imovel}`);
-          const fotos = resImg.ok ? await resImg.json() : [];
-          const imgUrl = fotos.length > 0 
-            ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` 
-            : 'https://via.placeholder.com/300x200';
-          return { ...imovel, imagem: imgUrl, fotos };
-        } catch {
-          return { ...imovel, imagem: 'https://via.placeholder.com/300x200', fotos: [] };
-        }
-      }));
+     async function processarEmLotes(imoveis, tamanhoDoLote = 5) {
+  const resultado = [];
+  for (let i = 0; i < imoveis.length; i += tamanhoDoLote) {
+    const lote = imoveis.slice(i, i + tamanhoDoLote);
+    const resultadosLote = await Promise.all(lote.map(async (imovel) => {
+      try {
+        const resImg = await fetch(`http://192.168.1.44:3000/fotos_casa?id_imovel=${imovel.id_imovel}`);
+        const fotos = resImg.ok ? await resImg.json() : [];
+        const imgUrl = fotos.length > 0 
+          ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` 
+          : 'https://via.placeholder.com/300x200';
+        return { ...imovel, imagem: imgUrl, fotos };
+      } catch {
+        return { ...imovel, imagem: 'https://via.placeholder.com/300x200', fotos: [] };
+      }
+    }));
+    resultado.push(...resultadosLote);
+  }
+  return resultado;
+}
+
+// Uso:
+const imoveisComFotos = await processarEmLotes(imoveis, 5);
 
       renderCards(imoveisComFotos);
 
@@ -143,11 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
     resultCount.textContent = `${imoveis.length} imóveis encontrados`;
   }
 
-  // ============================================================
-  // 🔹 Filtrar ao clicar
   btnFiltrar.addEventListener("click", fetchImoveis);
 
-  // 🔹 Carregar cidades do IBGE
   const cidades = document.querySelector('#cidade');
   cidades.addEventListener('click', async () => {
     const estado = document.querySelector('#estado').value;
@@ -175,6 +182,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🔹 Chama o GET automaticamente ao carregar
   fetchImoveis();
 });

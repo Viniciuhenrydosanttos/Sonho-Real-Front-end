@@ -180,6 +180,7 @@
 
       </div>
     </section>
+>  
 
     <!-- MODAL DE VISUALIZAÇÃO NOVO -->
     <dialog id="hotelModal" class="hotel-modal" aria-labelledby="hotel-title" aria-modal="true">
@@ -192,39 +193,54 @@
             <div class="hotel-main">
               <img id="hotel-image" src="img/padrao.jpg" alt="Imagem do imóvel">
               <div class="gallery-controls">
-                <button id="prevImg" class="gbtn" aria-label="Anterior">‹</button>
-                <button id="nextImg" class="gbtn" aria-label="Próxima">›</button>
               </div>
             </div>
             <div class="hotel-thumbs" id="hotel-thumbs">
               <div id="thumbs-wrapper" class="thumbs-wrapper"></div>
-              <button id="prev-thumb" class="thumb-nav">‹</button>
-              <button id="next-thumb" class="thumb-nav">›</button>
 
               <!-- miniaturas via JS -->
             </div>
           </div>
 
-          <!-- INFORMAÇÕES -->
-          <div class="hotel-info">
-            <h2 id="hotel-title">Nome do Imóve    l</h2>
-            <div class="hotel-meta">
-              <div id="hotel-location">Localização</div>
-              <div id="hotel-rooms">Quartos / Banheiros</div>
-            </div>
-            <p id="hotel-desc">Descrição detalhada do imóvel...</p>
+         <!-- INFORMAÇÕES AMPLIADAS -->
+<div class="hotel-info">
+  <h2 id="hotel-title"></h2>
+  
+  <!-- Localização e detalhes -->
+  <div class="hotel-meta">
+    <div id="hotel-location"></div>
+    <div id="hotel-rooms"></div>
+    <div id="hotel-garage"></div>
+    <div id="hotel-area"></div>
+  </div>
+  
+  <!-- Descrição detalhada -->
+  <p id="hotel-desc">
+  </p>
+  
+  <!-- Comodidades -->
+  <ul id="hotel-amenities">
+  
+  </ul>
+  
 
-            <div class="hotel-footer">
-              <div class="hotel-price" id="hotel-price">R$ 0,00</div>
-              <div class="hotel-actions">
-                <button id="btn-solicitar" class="btn btn-primary">Solicitar visita</button>
-                <button id="btn-mensagem" class="btn-outline">Mensagem</button>
-              </div>
-            </div>
+  <!-- Rodapé com preço e ações -->
+  <div class="hotel-footer">
+    <div class="hotel-price" id="hotel-price"></div>
+    <div class="hotel-actions">
+      <button id="btn-solicitar" class="btn btn-primary">Solicitar visita</button>
+      <button id="btn-mensagem" class="btn-outline">Mensagem</button>
+    </div>
+  </div>
+
+  <!-- Mapa reduzido -->
+  <div class="hotel-smallmap" id="hotel-smallmap" aria-hidden="true">
+  </div>
+</div>
+
 
             <!-- mapa/resumo pequeno -->
             <div class="hotel-smallmap" id="hotel-smallmap" aria-hidden="true">
-              <span>📍 Endereço (mapa reduzido)</span>
             </div>
           </div>
         </div>

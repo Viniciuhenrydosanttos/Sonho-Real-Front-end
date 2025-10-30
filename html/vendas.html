@@ -13,7 +13,6 @@
   <main class="container">
     <div class="anuncio-card">
 
-      <!-- Imagem Principal -->
       <div class="imagem-placeholder" onclick="document.getElementById('fileInput').click()">
         <img id="preview" src="" alt="Clique para adicionar imagem" style="display: none;">
         <span id="placeholderText">Clique para adicionar imagem do imóvel</span>
@@ -33,6 +32,22 @@
         <input type="text" id="numero" placeholder="Número">
         <input type="text" id="cidade" placeholder="Cidade">
         <input type="text" id="estado" placeholder="Estado">
+       <input type="text" id="descricao" placeholder="descricao">
+      </div>
+
+      <!-- Tipo de Moradia -->
+      <div class="filter-section">
+        <label for="tipo_moradia">Tipo de Moradia</label>
+        <select id="tipo_moradia">
+          <option value="">Selecione</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Kitnet">Kitnet</option>
+          <option value="Sobrado">Sobrado</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Cobertura">Cobertura</option>
+          <option value="Chácara">Chácara</option>
+        </select>
       </div>
 
       <!-- Área, quartos e vagas -->
@@ -117,8 +132,7 @@
       </div>
 
       <!-- Descrição do imóvel -->
-      <div class="descricao" contenteditable="true" placeholder="Escreva a descrição do imóvel...">
-      </div>
+      <div class="descricao" contenteditable="true" placeholder="Escreva a descrição do imóvel..."></div>
 
       <!-- Botão de publicação -->
       <button class="btn-publicar" onclick="publicar()">Publicar Anúncio</button>

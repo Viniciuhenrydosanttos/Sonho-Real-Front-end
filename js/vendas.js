@@ -94,8 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const imovel = {
       nome_casa,
-      tipo_moradia: "Apartamento",
-      finalidade: "Venda",
+      tipo_moradia, 
+      finalidade,
       preco,
       rua,
       bairro,
