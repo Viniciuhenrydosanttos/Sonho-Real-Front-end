@@ -692,9 +692,7 @@ column; gap: 12px; }
   background: #ff3388;
   box-shadow: 0 0 10px #ff3388;
 }
-/* ==============================
-   🌟 Modal do Hotel - Estilo Profissional
-   ============================== */
+
 
 .hotel-modal {
   width: 90%;
@@ -766,30 +764,31 @@ column; gap: 12px; }
   background: #b89959; /* tom mais elegante ao passar */
 }
 
-/* ==============================
-   Botão de fechar
-   ============================== */
-.close-btn {
+#closeModal {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: rgba(31,58,95,0.8);
+  background: transparent; /* totalmente transparente */
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   font-size: 22px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 10;
 }
-.close-btn:hover {
+
+#closeModal:hover {
   background: #1F3A5F;
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(5deg);
 }
+
 
 /* ==============================
    Fundo do modal (backdrop)

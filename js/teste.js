@@ -163,9 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ============================================
-  // 🔑 LOGIN
-  // ============================================
+
   if (loginFormElement) {
     loginFormElement.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -200,9 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ============================================
-  // 🏡 FETCH DE IMÓVEIS
-  // ============================================
+
   const searchInput = document.querySelector('.search input[type="search"]');
   const typeSelect = document.querySelector('.search select');
   const searchButton = document.querySelector('.search .go');
@@ -233,9 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ============================================
-  // 🔎 RENDER E FILTRO
-  // ============================================
+
   function renderImoveis(imoveis) {
     if (!gridList) return;
     gridList.innerHTML = "";
@@ -269,9 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
   searchButton?.addEventListener("click", filterImoveis);
   searchInput?.addEventListener("keyup", (e) => { if (e.key === "Enter") filterImoveis(); });
 
-  // ============================================
-  // 🏡 FUNÇÕES DE CARD E MODAL
-  // ============================================
   function criarCard(imovel) {
     const article = document.createElement("article");
     article.className = "listing grid-style";
@@ -281,39 +272,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const localizacao = `${imovel.rua}, ${imovel.numero} - ${imovel.bairro}, ${imovel.cidade} - ${imovel.estado}`;
 
     article.innerHTML = `
-      <div class="grid-container">
-        <div class="grid-large">
-          <img src="data:${fotos[0].mimetype};base64,${fotos[0].data}" alt="${imovel.nome_casa}">
-        </div>
-        <div class="grid-small">
-          ${fotos.slice(1).map(f => `<img src="data:${f.mimetype};base64,${f.data}" alt="${imovel.nome_casa}">`).join('')}
-        </div>
-      </div>
+  <div class="grid-container">
+    <div class="grid-large">
+      <img src="data:${String(fotos[0]?.mimetype || '')};base64,${String(fotos[0]?.data || '')}" alt="${String(imovel.nome_casa || 'Imóvel')}">
+    </div>
+    <div class="grid-small">
+      ${fotos.slice(1).map(f => `
+        <img src="data:${String(f.mimetype || '')};base64,${String(f.data || '')}" alt="${String(imovel.nome_casa || 'Imóvel')}">
+      `).join('')}
+    </div>
+  </div>
 
-      <div class="info">
-        <div>
-          <div style="font-weight:700">${imovel.nome_casa}</div>
-          <div class="meta">
-            ${imovel.tipo_moradia} • ${imovel.area_total || "N/A"}m² • ${imovel.quartos} quartos • ${imovel.banheiros} banheiros
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="price">R$ ${Number(imovel.preco).toLocaleString("pt-BR")}</div>
-          <button class="btn btn-primary open-hotel"
-            data-title="${imovel.nome_casa}"
-            data-price="R$ ${Number(imovel.preco).toLocaleString('pt-BR')}"
-            data-location="${localizacao}"
-            data-rooms="${imovel.quartos} quartos • ${imovel.banheiros} banheiros"
-            data-garage="${imovel.vagas_garagem || 0} vaga(s)"
-            data-area="${imovel.area_total || 'N/A'}m²"
-            data-finalidade="${imovel.finalidade || ''}"
-            data-desc="${imovel.descricao || ''}"
-            data-fotos='${JSON.stringify(imovel.fotos)}'
-          >Ver mais</button>
-        </div>
+  <div class="info">
+    <div>
+      <div style="font-weight:700">${String(imovel.nome_casa || 'Sem nome')}</div>
+      <div class="meta">
+        ${String(imovel.tipo_moradia || 'N/A')} • ${String(imovel.area_total || 'N/A')}m² • ${String(imovel.quartos || 'N/A')} quartos • ${String(imovel.banheiros || 'N/A')} banheiros
       </div>
-    `;
+    </div>
+
+    <div class="card-footer">
+      <div class="price">R$ ${String(Number(imovel.preco || 0).toLocaleString("pt-BR"))}</div>
+      <button class="btn btn-primary open-hotel"
+        data-title="${String(imovel.nome_casa || '')}"
+        data-price="R$ ${String(Number(imovel.preco || 0).toLocaleString('pt-BR'))}"
+        data-location="${String(localizacao || '')}"
+        data-rooms="${String(imovel.quartos || 0)} quartos • ${String(imovel.banheiros || 0)} banheiros"
+        data-garage="${String(imovel.vagas_garagem || 0)} vaga(s)"
+        data-area="${String(imovel.area_total || 'N/A')}m²"
+        data-finalidade="${String(imovel.finalidade || '')}"
+        data-desc="${String(imovel.descricao || '')}"
+        data-fotos='${JSON.stringify(imovel.fotos || [])}'
+      >Ver mais</button>
+    </div>
+  </div>
+`;
+
     return article;
   }
 
