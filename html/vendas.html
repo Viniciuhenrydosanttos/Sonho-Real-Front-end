@@ -7,7 +7,7 @@
 </head>
 <body>
   <header>
-    <h1>Crie seu Anúncio</h1>
+        <h1>🏠 Painel do Administrador</h1>
   </header>
 
   <main class="container">
@@ -138,6 +138,86 @@
       <button class="btn-publicar" onclick="publicar()">Publicar Anúncio</button>
     </div>
   </main>
+
+<!-- 🏠 Lista de imóveis -->
+<section id="todos-imoveis">
+  <h2>Imóveis Cadastrados</h2>
+  <div id="cardContainer" class="card-container"></div>
+</section>
+<dialog id="modalEditar" class="modal-editar">
+  <form id="formEditar" method="dialog">
+    <h2>Editar Imóvel</h2>
+
+    <div class="grid-editar">
+      <label>Nome da Casa</label>
+      <input name="nome_casa" placeholder="Nome da casa" required>
+
+      <div class="filter-section">
+        <label for="tipo_moradia">Tipo de Moradia</label>
+        <select id="tipo_moradia">
+          <option value="">Selecione</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Kitnet">Kitnet</option>
+          <option value="Sobrado">Sobrado</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Cobertura">Cobertura</option>
+          <option value="Chácara">Chácara</option>
+        </select>
+      </div>
+      <!-- 🎯 Finalidade -->
+      <div class="filter-section">
+        <label for="finalidade">Finalidade</label>
+        <select id="finalidade">
+          <option value="">Selecione</option>
+          <option value="Venda">Venda</option>
+          <option value="Aluguel">Aluguel</option>
+        </select>
+      </div>
+
+      <label>Preço</label>
+      <input name="preco" type="number" placeholder="Preço" required>
+
+      <label>Rua</label>
+      <input name="rua" placeholder="Rua">
+
+      <label>Bairro</label>
+      <input name="bairro" placeholder="Bairro">
+
+      <label>Número</label>
+      <input name="numero" placeholder="Número">
+
+      <label>Cidade</label>
+      <input name="cidade" placeholder="Cidade">
+
+      <label>Estado</label>
+      <input name="estado" placeholder="Estado">
+
+      <label>Área Total (m²)</label>
+      <input name="area_total" type="number" placeholder="Área total">
+
+      <label>Quartos</label>
+      <input name="quartos" type="number" placeholder="Quartos">
+
+      <label>Banheiros</label>
+      <input name="banheiros" type="number" placeholder="Banheiros">
+
+      <label>Vagas de Garagem</label>
+      <input name="vagas_garagem" type="number" placeholder="Vagas de garagem">
+
+      <label>Disponibilidade</label>
+      <select name="disponibilidade">
+        <option>Disponível</option>
+        <option>Indisponível</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-salvar"> Salvar</button>
+      <button type="button" class="btn-cancelar" formmethod="dialog"> Cancelar</button>
+    </div>
+  </form>
+</dialog>
 
   <script src="../js/vendas.js"></script>
 </body>

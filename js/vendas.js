@@ -1,13 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const API_URL = "http://192.168.1.44:3000"; // <— seu backend
+
   const uploadInput = document.getElementById("fileInput");
   const preview = document.getElementById("preview");
   const placeholderText = document.getElementById("placeholderText");
+  const modalEditar = document.getElementById("modalEditar");
+  const formEditar = document.getElementById("formEditar");
 
-  let base64String = "";
-  const TAMANHO_MAXIMO_MB = 3;
-  const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 3024 * 2024;
+  const TAMANHO_MAXIMO_MB = 6; 
+  const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 1024 * 1024;
 
-  // ===== 1️⃣ Preview da imagem e conversão para Base64 =====
+  const filtroCidade = document.getElementById("filtroCidade");
+  const filtroTipo = document.getElementById("filtroTipo");
+  const filtroFinalidade = document.getElementById("filtroFinalidade");
+  const filtroPrecoMin = document.getElementById("filtroPrecoMin");
+  const filtroPrecoMax = document.getElementById("filtroPrecoMax");
+  const btnFiltrar = document.getElementById("btnFiltrar");
+
+  let arquivoSelecionado = null;
+  let base64String = ""; // ✅ variável global para Base64
+
+  // =============================
+  // 1️⃣ Upload e Preview
+  // =============================
   if (uploadInput) {
     uploadInput.addEventListener("change", (event) => {
       const file = event.target.files[0];
@@ -17,21 +32,27 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`A imagem é muito grande! Limite: ${TAMANHO_MAXIMO_MB}MB.`);
         preview.style.display = "none";
         uploadInput.value = "";
+        arquivoSelecionado = null;
+        base64String = "";
         return;
       }
 
+      arquivoSelecionado = file;
+
       const reader = new FileReader();
       reader.onload = () => {
-        base64String = reader.result.replace(/^data:.+;base64,/, "");
         preview.src = reader.result;
         preview.style.display = "block";
         if (placeholderText) placeholderText.style.display = "none";
+        base64String = reader.result.split(",")[1]; // só a parte Base64
       };
       reader.readAsDataURL(file);
     });
   }
 
-  // ===== 2️⃣ Função publicar =====
+  // =============================
+  // 2️⃣ Publicar Imóvel
+  // =============================
   window.publicar = async function () {
     if (!base64String) {
       alert("Escolha uma imagem primeiro!");
@@ -46,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 🔹 Primeiro envia a foto
     try {
-      const response = await fetch("http://localhost:3000/fotos_casa", {
+      const response = await fetch(`${API_URL}/fotos_casa`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(foto),
@@ -74,9 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const banheiros = parseInt(document.getElementById("banheiros")?.value || "0", 10);
     const vagas_garagem = parseInt(document.getElementById("vagas")?.value || "0", 10);
 
-    // 🔹 Agora finalidade e tipo_moradia corretos
     const tipo_moradia = document.getElementById("tipo_moradia")?.value || "Apartamento";
-    const finalidade = document.getElementById("finalidade")?.value || "Venda"; // << CORRIGIDO
+    const finalidade = document.getElementById("finalidade")?.value || "Venda";
     const disponibilidade = document.getElementById("disponibilidade")?.value || "Disponível";
 
     if (!nome_casa || !rua || !preco || !cidade || !estado) {
@@ -84,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 🔹 Captura checkboxes e converte para "Sim"/"Não"
     const camposCheckbox = [
       "brinquedoteca","churrasqueira","espaco_gourmet","piscina","playground","salao_festas","salao_jogos",
       "ar_condicionado","armarios_planejados","elevador","hidromassagem","jardim","lareira","mobilidade",
@@ -100,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const imovel = {
       nome_casa,
       tipo_moradia,
-      finalidade, // agora é string
+      finalidade,
       preco,
       rua,
       bairro,
@@ -117,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/imovel/cadastrar", {
+      const response = await fetch(`${API_URL}/imovel/cadastrar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(imovel),
@@ -139,19 +158,138 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // ===== 3️⃣ Funções de interface =====
-  window.toggleAtivo = (btn) => btn.classList.toggle("ativo");
+  // =============================
+  // 3️⃣ Carregar Imóveis
+  // =============================
+  async function carregarImoveis(filtros = {}) {
+    try {
+      const query = new URLSearchParams(filtros).toString();
+      const response = await fetch(`${API_URL}/imoveis?${query}`);
+      if (!response.ok) throw new Error("Erro ao buscar imóveis");
+      const imoveis = await response.json();
 
-  window.toggleSection = (header) => {
-    const section = header.parentElement;
-    const tags = section.querySelector(".tags");
-    const toggleIcon = header.querySelector(".toggle");
-    if (tags.style.display === "none" || tags.style.display === "") {
-      tags.style.display = "flex";
-      toggleIcon.textContent = "▼";
-    } else {
-      tags.style.display = "none";
-      toggleIcon.textContent = "▲";
+      const container = document.getElementById("cardContainer");
+      container.innerHTML = "";
+
+      for (const imovel of imoveis) {
+        let imgUrl = "https://via.placeholder.com/600x400?text=Sem+Imagem";
+        try {
+          const resImg = await fetch(`${API_URL}/fotos_casa?id_imovel=${imovel.id_imovel}`);
+          if (resImg.ok) {
+            const fotos = await resImg.json();
+            if (fotos.length > 0) imgUrl = `data:${fotos[0].mimetype};base64,${fotos[0].data}`;
+          }
+        } catch (erro) {
+          console.error("Erro ao carregar imagem:", erro);
+        }
+
+        const card = document.createElement("div");
+        card.classList.add("card-imovel");
+        card.innerHTML = `
+          <img src="${imgUrl}" alt="Imagem do imóvel" class="foto-imovel" style="width:100%; height:auto; object-fit:cover;" />
+          <div class="card-content">
+            <h3>${imovel.nome_casa}</h3>
+            <p><strong>${imovel.tipo_moradia}</strong> - ${imovel.finalidade}</p>
+            <p>${imovel.cidade} - ${imovel.estado}</p>
+            <p><strong>R$ ${parseFloat(imovel.preco || 0).toLocaleString("pt-BR")}</strong></p>
+            <p>${imovel.area_total || 0} m² • ${imovel.quartos || 0}Q • ${imovel.banheiros || 0}B • ${imovel.vagas_garagem || 0}V</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn-editar" onclick="abrirModalEditar(${imovel.id_imovel})">✏️ Editar</button>
+            <button class="btn-excluir" onclick="excluirImovel(${imovel.id_imovel})">🗑️ Excluir</button>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar imóveis:", error);
+    }
+  }
+  carregarImoveis();
+
+  // =============================
+  // 4️⃣ Filtro
+  // =============================
+  if (btnFiltrar) {
+    btnFiltrar.addEventListener("click", () => {
+      const filtros = {
+        cidade: filtroCidade.value || undefined,
+        tipo_moradia: filtroTipo.value || undefined,
+        finalidade: filtroFinalidade.value || undefined,
+        preco_minimo: filtroPrecoMin.value || undefined,
+        preco_maximo: filtroPrecoMax.value || undefined,
+      };
+      carregarImoveis(filtros);
+    });
+  }
+
+  // =============================
+  // 5️⃣ CRUD Restante
+  // =============================
+  window.excluirImovel = async (id) => {
+    if (!confirm("Deseja realmente excluir este imóvel?")) return;
+    try {
+      const res = await fetch(`${API_URL}/imovel/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Erro ao excluir imóvel");
+      alert("🗑️ Imóvel excluído com sucesso!");
+      carregarImoveis();
+    } catch (err) {
+      console.error(err);
+      alert("❌ Falha ao excluir imóvel.");
     }
   };
+
+  window.abrirModalEditar = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/imovel/${id}`);
+      if (!res.ok) throw new Error("Erro ao buscar imóvel");
+      const imovel = await res.json();
+      Object.keys(imovel).forEach((key) => {
+        const input = formEditar.querySelector(`[name="${key}"]`);
+        if (input) input.value = imovel[key] ?? "";
+      });
+      formEditar.dataset.id = id;
+      modalEditar.showModal();
+    } catch (err) {
+      console.error(err);
+      alert("❌ Falha ao abrir modal de edição.");
+    }
+  };
+
+  formEditar.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = formEditar.dataset.id;
+    const formData = Object.fromEntries(new FormData(formEditar));
+    const dados = {
+      nome_casa: formData.nome_casa || "",
+      tipo_moradia: formData.tipo_moradia || "Apartamento",
+      finalidade: formData.finalidade || "Venda",
+      preco: parseFloat(formData.preco) || 0,
+      rua: formData.rua || "",
+      bairro: formData.bairro || "",
+      numero: formData.numero || "",
+      cidade: formData.cidade || "",
+      estado: formData.estado || "",
+      descricao: formData.descricao || "",
+      area_total: parseInt(formData.area_total) || 0,
+      quartos: parseInt(formData.quartos) || 0,
+      banheiros: parseInt(formData.banheiros) || 0,
+      vagas_garagem: parseInt(formData.vagas_garagem) || 0,
+      disponibilidade: formData.disponibilidade || "Disponível"
+    };
+    try {
+      const response = await fetch(`${API_URL}/imovel/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados),
+      });
+      if (!response.ok) throw new Error("Erro ao atualizar imóvel");
+      alert("✅ Imóvel atualizado com sucesso!");
+      modalEditar.close();
+      carregarImoveis();
+    } catch (err) {
+      console.error(err);
+      alert("❌ Falha ao atualizar imóvel.");
+    }
+  });
 });
