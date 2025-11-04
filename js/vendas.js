@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const placeholderText = document.getElementById("placeholderText");
 
   let base64String = "";
-  const TAMANHO_MAXIMO_MB = 2;
-  const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 1024 * 1024;
+  const TAMANHO_MAXIMO_MB = 3;
+  const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 3024 * 2024;
 
   // ===== 1️⃣ Preview da imagem e conversão para Base64 =====
   if (uploadInput) {
@@ -73,6 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const quartos = document.querySelectorAll(".quantity-btns button.ativo")?.length || 0;
     const banheiros = parseInt(document.getElementById("banheiros")?.value || "0", 10);
     const vagas_garagem = parseInt(document.getElementById("vagas")?.value || "0", 10);
+
+    // 🔹 Agora finalidade e tipo_moradia corretos
+    const tipo_moradia = document.getElementById("tipo_moradia")?.value || "Apartamento";
+    const finalidade = document.getElementById("finalidade")?.value || "Venda"; // << CORRIGIDO
     const disponibilidade = document.getElementById("disponibilidade")?.value || "Disponível";
 
     if (!nome_casa || !rua || !preco || !cidade || !estado) {
@@ -83,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🔹 Captura checkboxes e converte para "Sim"/"Não"
     const camposCheckbox = [
       "brinquedoteca","churrasqueira","espaco_gourmet","piscina","playground","salao_festas","salao_jogos",
-      "ar_condicionado","armarios_planejados","elevador","hidromassagem","jardim","lareira","mobilidade","quintal","sauna","varanda"
+      "ar_condicionado","armarios_planejados","elevador","hidromassagem","jardim","lareira","mobilidade",
+      "quintal","sauna","varanda"
     ];
 
     const imovelCheckbox = {};
@@ -94,8 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const imovel = {
       nome_casa,
-      tipo_moradia, 
-      finalidade,
+      tipo_moradia,
+      finalidade, // agora é string
       preco,
       rua,
       bairro,
@@ -108,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       vagas_garagem,
       disponibilidade,
       foto: base64String,
-      ...imovelCheckbox // adiciona todos os campos "Sim"/"Não"
+      ...imovelCheckbox
     };
 
     try {
@@ -127,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       preview.style.display = "none";
       uploadInput.value = "";
       if (placeholderText) placeholderText.style.display = "block";
+      document.querySelectorAll("input, select").forEach(el => (el.value = ""));
     } catch (err) {
       console.error(err);
       alert("❌ Erro ao cadastrar imóvel. Veja o console.");

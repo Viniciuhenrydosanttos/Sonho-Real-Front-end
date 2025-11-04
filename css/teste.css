@@ -697,24 +697,22 @@ column; gap: 12px; }
 .hotel-modal {
   width: 90%;
   max-width: 900px;
-  padding: 24px; /* aumento leve para respirar */
-  border-radius: 20px; /* cantos mais suaves */
-  background: linear-gradient(135deg, #C9A86A, #FCF4E3); /* elegante */
-  box-shadow: 0 12px 32px rgba(31, 58, 95, 0.15); /* sombra mais profunda e suave */
+  padding: 24px; 
+  border-radius: 20px; 
+  background: linear-gradient(135deg, #C9A86A, #FCF4E3); 
+  box-shadow: 0 12px 32px rgba(31, 58, 95, 0.15); 
   position: relative;
-  animation: fadeIn 0.3s ease; /* animação ao abrir */
+  animation: fadeIn 0.3s ease;
   font-family: 'Poppins', sans-serif;
 }
 
-/* animação de fade-in do modal */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==============================
-   Informações do hotel
-   ============================== */
+
 .hotel-info h2 {
   font-size: 30px;
   font-weight: 700;
@@ -737,9 +735,7 @@ column; gap: 12px; }
   color: #555;
 }
 
-/* ==============================
-   Ações do hotel (botões)
-   ============================== */
+
 .hotel-actions {
   display: flex;
   gap: 16px;
@@ -790,16 +786,14 @@ column; gap: 12px; }
 }
 
 
-/* ==============================
+/* 
    Fundo do modal (backdrop)
-   ============================== */
+    */
 .hotel-modal::backdrop {
   background: rgba(0,0,0,0.6);
 }
 
-/* ==============================
-   Galeria de imagens
-   ============================== */
+
 .hotel-gallery {
   display: grid;
   grid-template-columns: 2.5fr 1fr;

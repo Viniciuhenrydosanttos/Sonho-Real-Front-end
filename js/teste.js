@@ -245,7 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     activateHotelModal();
-    initFavoritos();
   }
 
   async function filterImoveis() {
@@ -341,10 +340,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         titleEl.textContent = btn.dataset.title || "Imóvel";
         priceEl.textContent = btn.dataset.price || "";
-        locationEl.innerHTML = `<strong>📍 Localização:</strong> ${btn.dataset.location || ""}`;
-        roomsEl.innerHTML = `<strong>🛏️ Quartos / Banheiros:</strong> ${btn.dataset.rooms || ""}`;
-        garageEl.innerHTML = `<strong>🚗 Garagem:</strong> ${btn.dataset.garage || "N/A"}`;
-        areaEl.innerHTML = `<strong>📐 Área Total:</strong> ${btn.dataset.area || "N/A"}`;
+        locationEl.innerHTML = `<strong> Localização:</strong> ${btn.dataset.location || ""}`;
+        roomsEl.innerHTML = `<strong> Quartos / Banheiros:</strong> ${btn.dataset.rooms || ""}`;
+        garageEl.innerHTML = `<strong> Garagem:</strong> ${btn.dataset.garage || "N/A"}`;
+        areaEl.innerHTML = `<strong> Área Total:</strong> ${btn.dataset.area || "N/A"}`;
         descEl.textContent = btn.dataset.desc?.trim() || "Sem descrição detalhada.";
 
         amenitiesEl.innerHTML = "";
@@ -406,9 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  // ============================================
-  // 🌐 INICIALIZAÇÃO GERAL
-  // ============================================
+  
   async function initApp() {
     const imoveis = await fetchImoveis();
     renderImoveis(imoveis);
