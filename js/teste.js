@@ -1,6 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // ============================================
+  // 🚫 BLOQUEIO DE ACESSO SEM LOGIN (NOVO COMPORTAMENTO)
+  // ============================================
+  function exigirLogin(callback) {
+    const loggedUser = localStorage.getItem("user");
+    const signupModal = document.getElementById("signupModal");
+
+    if (loggedUser) {
+      callback(); // usuário logado → executa ação
+    } else {
+      if (signupModal) signupModal.showModal(); // abre modal de login
+    }
+  }
+
+  // ============================================
   // 🔐 MODAL DE CADASTRO / LOGIN
   // ============================================
   const signupModal = document.getElementById("signupModal");
@@ -118,7 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const loggedUser = localStorage.getItem("user");
-  if (loggedUser) setUserUI(loggedUser);
+  if (loggedUser) {
+    setUserUI(loggedUser);
+  }
 
   // ============================================
   // 📝 REGISTRO
@@ -163,7 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
+  // ============================================
+  // 🔑 LOGIN
+  // ============================================
   if (loginFormElement) {
     loginFormElement.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -198,7 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
+  // ============================================
+  // 🏠 BUSCA DE IMÓVEIS
+  // ============================================
   const searchInput = document.querySelector('.search input[type="search"]');
   const typeSelect = document.querySelector('.search select');
   const searchButton = document.querySelector('.search .go');
@@ -210,7 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Falha ao conectar ao servidor");
       const imoveis = await res.json();
 
-      // Adiciona fotos
       const imoveisComFotos = await Promise.all(imoveis.map(async (imovel) => {
         try {
           const resImg = await fetch(`http://192.168.1.44:3000/fotos_casa?id_imovel=${imovel.id_imovel}`);
@@ -229,7 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
   function renderImoveis(imoveis) {
     if (!gridList) return;
     gridList.innerHTML = "";
@@ -239,7 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     imoveis.forEach((imovel) => {
-      const localizacao = `${imovel.rua}, ${imovel.numero} - ${imovel.bairro}, ${imovel.cidade} - ${imovel.estado}`;
       const article = criarCard(imovel);
       gridList.appendChild(article);
     });
@@ -306,7 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 `;
-
     return article;
   }
 
@@ -325,93 +341,99 @@ document.addEventListener("DOMContentLoaded", () => {
     const amenitiesEl = document.getElementById("hotel-amenities");
     const mainImg = document.getElementById("hotel-image");
     const thumbsWrapper = document.getElementById("thumbs-wrapper");
-    const prevThumb = document.getElementById("prev-thumb");
-    const nextThumb = document.getElementById("next-thumb");
 
     const openButtons = document.querySelectorAll(".open-hotel");
 
-    let currentImgIndex = 0;
-    let currentImages = [];
-
     openButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const fotos = JSON.parse(btn.dataset.fotos || "[]");
-        const mainImage = fotos.length ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` : "img/padrao.jpg";
+        exigirLogin(() => {
+          const fotos = JSON.parse(btn.dataset.fotos || "[]");
+          const mainImage = fotos.length ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` : "img/padrao.jpg";
 
-        titleEl.textContent = btn.dataset.title || "Imóvel";
-        priceEl.textContent = btn.dataset.price || "";
-        locationEl.innerHTML = `<strong> Localização:</strong> ${btn.dataset.location || ""}`;
-        roomsEl.innerHTML = `<strong> Quartos / Banheiros:</strong> ${btn.dataset.rooms || ""}`;
-        garageEl.innerHTML = `<strong> Garagem:</strong> ${btn.dataset.garage || "N/A"}`;
-        areaEl.innerHTML = `<strong> Área Total:</strong> ${btn.dataset.area || "N/A"}`;
-        descEl.textContent = btn.dataset.desc?.trim() || "Sem descrição detalhada.";
+          titleEl.textContent = btn.dataset.title || "Imóvel";
+          priceEl.textContent = btn.dataset.price || "";
+          locationEl.innerHTML = `<strong> Localização:</strong> ${btn.dataset.location || ""}`;
+          roomsEl.innerHTML = `<strong> Quartos / Banheiros:</strong> ${btn.dataset.rooms || ""}`;
+          garageEl.innerHTML = `<strong> Garagem:</strong> ${btn.dataset.garage || "N/A"}`;
+          areaEl.innerHTML = `<strong> Área Total:</strong> ${btn.dataset.area || "N/A"}`;
+          descEl.textContent = btn.dataset.desc?.trim() || "Sem descrição detalhada.";
 
-        amenitiesEl.innerHTML = "";
-        const comodidades = [
-          btn.dataset.finalidade && `Finalidade: ${btn.dataset.finalidade}`,
-        ].filter(Boolean);
+          amenitiesEl.innerHTML = "";
+          const comodidades = [
+            btn.dataset.finalidade && `Finalidade: ${btn.dataset.finalidade}`,
+          ].filter(Boolean);
 
-        if (comodidades.length > 0) {
-          comodidades.forEach((item) => {
-            const li = document.createElement("li");
-            li.textContent = item;
-            amenitiesEl.appendChild(li);
+          if (comodidades.length > 0) {
+            comodidades.forEach((item) => {
+              const li = document.createElement("li");
+              li.textContent = item;
+              amenitiesEl.appendChild(li);
+            });
+          } else {
+            amenitiesEl.innerHTML = "<li>Sem comodidades informadas</li>";
+          }
+
+          mainImg.src = mainImage;
+          thumbsWrapper.innerHTML = "";
+          fotos.forEach((f, i) => {
+            const thumb = document.createElement("img");
+            thumb.src = `data:${f.mimetype};base64,${f.data}`;
+            thumb.className = "thumb";
+            thumb.addEventListener("click", () => {
+              mainImg.src = thumb.src;
+              document.querySelectorAll(".thumb").forEach(t => t.classList.remove("active"));
+              thumb.classList.add("active");
+            });
+            thumbsWrapper.appendChild(thumb);
+            if (i === 0) thumb.classList.add("active");
           });
-        } else {
-          amenitiesEl.innerHTML = "<li>Sem comodidades informadas</li>";
-        }
 
-        mainImg.src = mainImage;
-        currentImages = fotos.map((f) => `data:${f.mimetype};base64,${f.data}`);
-        if (currentImages.length === 0) currentImages.push(mainImage);
-        currentImgIndex = 0;
-
-        thumbsWrapper.innerHTML = "";
-        currentImages.forEach((src, i) => {
-          const thumb = document.createElement("img");
-          thumb.src = src;
-          thumb.className = "thumb";
-          thumb.addEventListener("click", () => {
-            currentImgIndex = i;
-            mainImg.style.opacity = 0;
-            setTimeout(() => {
-              mainImg.src = src;
-              mainImg.style.opacity = 1;
-            }, 150);
-            highlightThumb(i);
-          });
-          thumbsWrapper.appendChild(thumb);
+          modal.showModal();
         });
-
-        highlightThumb(0);
-        modal.showModal();
       });
     });
 
-    function highlightThumb(index) {
-      document.querySelectorAll(".thumb").forEach((thumb, i) => {
-        thumb.classList.toggle("active", i === index);
-      });
-    }
+    closeBtn?.addEventListener("click", () => modal.close());
+  }
 
-    if (closeBtn) closeBtn.addEventListener("click", () => modal.close());
-    modal.addEventListener("click", (e) => {
-      const rect = modal.getBoundingClientRect();
-      if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
-        modal.close();
+  // ============================================
+  // 🚫 BLOQUEIO DE LINKS SEM LOGIN
+  // ============================================
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", (e) => {
+      const loggedUser = localStorage.getItem("user");
+      if (!loggedUser) {
+        e.preventDefault();
+        const signupModal = document.getElementById("signupModal");
+        if (signupModal) signupModal.showModal();
       }
     });
+  });
+function abrirContato() {
+  const linkWhatsApp = "https://wa.me/5517991020080";
+ 
+  window.open(linkWhatsApp, "_blank");
+}
+  fetchImoveis().then(renderImoveis);
+// ========== FUNÇÕES DO CALENDÁRIO ==========
+function abrirCalendario() {
+  const calendario = document.getElementById("calendario-visita");
+  calendario.classList.remove("hidden");
+}
+
+function fecharCalendario() {
+  const calendario = document.getElementById("calendario-visita");
+  calendario.classList.add("hidden");
+}
+
+function confirmarVisita() {
+  const data = document.getElementById("data-visita").value;
+  if (!data) {
+    alert("Por favor, selecione uma data para a visita.");
+    return;
   }
 
-
-
-  
-  async function initApp() {
-    const imoveis = await fetchImoveis();
-    renderImoveis(imoveis);
-    renderDestaques(imoveis);
-  }
-
-  initApp();
-
-});
+  alert(`Visita agendada para o dia ${new Date(data).toLocaleDateString("pt-BR")}!`);
+  fecharCalendario();
+}
+}); // Fim do DOMContentLoaded

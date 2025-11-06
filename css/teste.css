@@ -782,6 +782,66 @@ column; gap: 12px; }
   margin-top: 20px;
   flex-wrap: wrap; /* responsivo */
 }
+/* ===============================
+   BOTÕES DO MODAL DO IMÓVEL
+   =============================== */
+#btn-solicitar,
+#btn-mensagem {
+  width: 45%;
+  padding: 6px 0;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 BOTÃO DE SOLICITAR VISITA */
+#btn-solicitar.btn-primary {
+  background: linear-gradient(135deg, #b50aff, #8e0de9);
+  border: none;
+  color: #fff;
+}
+
+#btn-solicitar.btn-primary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #8e0de9, #b50aff);
+  box-shadow: 0 4px 10px rgba(181, 10, 255, 0.3);
+}
+
+/* 🔸 BOTÃO DE MENSAGEM */
+#btn-mensagem.btn-outline {
+  background: transparent;
+  border: 1.5px solid #b50aff;
+  color: #b50aff;
+}
+
+#btn-mensagem.btn-outline:hover {
+  background: #b50aff;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(181, 10, 255, 0.25);
+}
+
+/* 💎 Ajuste do container */
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+
+/* Container opcional (para alinhamento lado a lado) */
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
 
 .btn-visita {
   flex: 1;

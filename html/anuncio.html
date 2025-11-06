@@ -238,8 +238,8 @@
           <p>Casa Moderna</p>
           <p>60m² · 3 quartos · 2 vagas</p>
           <strong>R$ 541.000</strong>
-          <button>Contatar</button>
-        </div>
+          <button>ver mais</button>
+
       </div>
 
       <div class="card">
@@ -248,11 +248,59 @@
           <h3>Rua Capitão Leonidas Marques, Curitiba/PR</h3>
           <p>47m² · Sala Comercial</p>
           <strong>R$ 4.470</strong>
-          <button>Contatar</button>
+          <button>ver mais</button>
         </div>
       </div>
     </main>
   </div>
+<!-- ==============================
+🏠 MODAL DE DETALHES DO IMÓVEL
+============================== -->
+<!-- ... resto da página ... -->
+
+<!-- MODAL DE DETALHES -->
+<div id="modalDetalhes" class="modal hidden">
+  <div class="modal-content">
+    <button class="modal-close" onclick="fecharModalDetalhes()">×</button>
+
+    <div class="modal-topo">
+      <div class="modal-img-wrapper">
+        <img id="modalImagem" src="https://via.placeholder.com/600x400" alt="Imagem do imóvel">
+      </div>
+<div class="modal-gallery" id="modalGaleria"></div>
+
+      <div class="modal-info">
+        <h2 id="modalTitulo">Título do Anúncio</h2>
+        <p id="modalDescricao" class="descricao">Sem descrição disponível.</p>
+
+        <div class="modal-detalhes-grid">
+          <p><strong>Área:</strong> <span id="modalArea">—</span></p>
+          <p><strong>Quartos:</strong> <span id="modalQuartos">—</span></p>
+          <p><strong>Banheiros:</strong> <span id="modalBanheiros">—</span></p>
+          <p><strong>Vagas:</strong> <span id="modalVagas">—</span></p>
+          <p><strong>Finalidade:</strong> <span id="modalFinalidade">—</span></p>
+          <p><strong>Preço:</strong> <span id="modalPreco">—</span></p>
+          <p><strong>Disponível:</strong> <span id="modalDisponibilidade">—</span></p>
+        </div>
+
+       <div class="modal-botoes">
+  <button class="btn-solicitar" onclick="abrirCalendario()">📅 Solicitar Visita</button>
+  <button class="btn-mensagem" onclick="abrirContato()">💬 Número / WhatsApp</button>
+</div>
+
+<!-- CALENDÁRIO (inicialmente escondido) -->
+<div id="calendario-visita" class="calendario hidden">
+  <h3>Escolha uma data para visita</h3>
+  <input type="date" id="data-visita" />
+  <button class="btn-confirmar" onclick="confirmarVisita()">Confirmar</button>
+  <button class="btn-fechar" onclick="fecharCalendario()">Cancelar</button>
+</div>
+
+
+<!-- Coloque o script SEMPRE depois -->
+<script src="anuncio.js"></script>
+</body>
+</html>
 
   <script src="../js/anuncio.js"></script>
 </body>

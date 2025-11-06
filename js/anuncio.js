@@ -11,6 +11,25 @@ function fecharModalTipo() {
   document.getElementById("modalTipo").classList.add("hidden");
 }
 
+function abrirModalDetalhes(imovel) {
+  document.getElementById("modalImagem").src = imovel.imagem;
+  document.getElementById("modalTitulo").textContent = imovel.nome_casa || "Imóvel";
+  document.getElementById("modalDescricao").textContent = imovel.descricao || "Sem descrição disponível.";
+  document.getElementById("modalArea").textContent = imovel.area_total || 0;
+  document.getElementById("modalQuartos").textContent = imovel.quartos || 0;
+  document.getElementById("modalBanheiros").textContent = imovel.banheiros || 0;
+  document.getElementById("modalVagas").textContent = imovel.vagas_garagem || 0;
+  document.getElementById("modalFinalidade").textContent = imovel.finalidade || "Não informado";
+  document.getElementById("modalPreco").textContent = Number(imovel.preco || 0).toLocaleString('pt-BR');
+  document.getElementById("modalDisponibilidade").textContent = imovel.disponibilidade ? "Sim" : "Não";
+
+  document.getElementById("modalDetalhes").classList.remove("hidden");
+}
+
+function fecharModalDetalhes() {
+  document.getElementById("modalDetalhes").classList.add("hidden");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const estadoSelect = document.getElementById("estado");
@@ -94,30 +113,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const imoveis = await res.json();
 
-     async function processarEmLotes(imoveis, tamanhoDoLote = 5) {
-  const resultado = [];
-  for (let i = 0; i < imoveis.length; i += tamanhoDoLote) {
-    const lote = imoveis.slice(i, i + tamanhoDoLote);
-    const resultadosLote = await Promise.all(lote.map(async (imovel) => {
-      try {
-        const resImg = await fetch(`http://192.168.1.44:3000/fotos_casa?id_imovel=${imovel.id_imovel}`);
-        const fotos = resImg.ok ? await resImg.json() : [];
-        const imgUrl = fotos.length > 0 
-          ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` 
-          : 'https://via.placeholder.com/300x200';
-        return { ...imovel, imagem: imgUrl, fotos };
-      } catch {
-        return { ...imovel, imagem: 'https://via.placeholder.com/300x200', fotos: [] };
+      async function processarEmLotes(imoveis, tamanhoDoLote = 5) {
+        const resultado = [];
+        for (let i = 0; i < imoveis.length; i += tamanhoDoLote) {
+          const lote = imoveis.slice(i, i + tamanhoDoLote);
+          const resultadosLote = await Promise.all(lote.map(async (imovel) => {
+            try {
+              const resImg = await fetch(`http://192.168.1.44:3000/fotos_casa?id_imovel=${imovel.id_imovel}`);
+              const fotos = resImg.ok ? await resImg.json() : [];
+              const imgUrl = fotos.length > 0 
+                ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` 
+                : 'https://via.placeholder.com/300x200';
+              return { ...imovel, imagem: imgUrl, fotos };
+            } catch {
+              return { ...imovel, imagem: 'https://via.placeholder.com/300x200', fotos: [] };
+            }
+          }));
+          resultado.push(...resultadosLote);
+        }
+        return resultado;
       }
-    }));
-    resultado.push(...resultadosLote);
-  }
-  return resultado;
-}
 
-// Uso:
-const imoveisComFotos = await processarEmLotes(imoveis, 5);
-
+      const imoveisComFotos = await processarEmLotes(imoveis, 5);
       renderCards(imoveisComFotos);
 
     } catch (err) {
@@ -127,7 +144,6 @@ const imoveisComFotos = await processarEmLotes(imoveis, 5);
     }
   }
 
-  
   function renderCards(imoveis) {
     if (!imoveis.length) {
       cardsContainer.innerHTML = "<p>Nenhum imóvel encontrado</p>";
@@ -144,13 +160,20 @@ const imoveisComFotos = await processarEmLotes(imoveis, 5);
           <p>Finalidade: ${imovel.finalidade || "Não informado"}</p>
           <strong>R$ ${Number(imovel.preco || 0).toLocaleString('pt-BR')}</strong>
           <p>Disponível: ${imovel.disponibilidade ? 'Sim' : 'Não'}</p>
-          <button>Contatar</button>
+          <button class="btn-detalhes" data-imovel='${JSON.stringify(imovel)}'>Ver mais</button>
         </div>
       </div>
     `).join("");
 
     cardsContainer.innerHTML = html;
     resultCount.textContent = `${imoveis.length} imóveis encontrados`;
+
+    document.querySelectorAll(".btn-detalhes").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const imovel = JSON.parse(e.target.dataset.imovel);
+        abrirModalDetalhes(imovel);
+      });
+    });
   }
 
   btnFiltrar.addEventListener("click", fetchImoveis);
@@ -184,3 +207,77 @@ const imoveisComFotos = await processarEmLotes(imoveis, 5);
 
   fetchImoveis();
 });
+// ================================
+// 🏠 FUNÇÕES DO MODAL DE DETALHES
+// ================================
+
+// Abre o modal e preenche as informações do imóvel
+function abrirModalDetalhes(imovel) {
+  const modal = document.getElementById("modalDetalhes");
+
+  // Preenche os campos
+  document.getElementById("modalImagem").src = imovel.imagem || "https://via.placeholder.com/400x300";
+  document.getElementById("modalTitulo").textContent = imovel.nome_casa || "Imóvel";
+  document.getElementById("modalDescricao").textContent = imovel.descricao || "Sem descrição disponível.";
+  document.getElementById("modalArea").textContent = imovel.area_total ? `${imovel.area_total} m²` : "—";
+  document.getElementById("modalQuartos").textContent = imovel.quartos || "—";
+  document.getElementById("modalBanheiros").textContent = imovel.banheiros || "—";
+  document.getElementById("modalVagas").textContent = imovel.vagas_garagem || "—";
+  document.getElementById("modalFinalidade").textContent = imovel.finalidade || "Não informado";
+  document.getElementById("modalPreco").textContent = imovel.preco
+    ? `R$ ${Number(imovel.preco).toLocaleString("pt-BR")}`
+    : "R$ —";
+  document.getElementById("modalDisponibilidade").textContent = imovel.disponibilidade
+    ? "Sim"
+    : "Não";
+
+  // Mostra o modal
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden"; // bloqueia scroll do fundo
+}
+
+// Fecha o modal
+function fecharModalDetalhes() {
+  const modal = document.getElementById("modalDetalhes");
+  modal.classList.add("hidden");
+  document.body.style.overflow = ""; // restaura scroll
+}
+
+// Fecha o modal ao clicar fora do conteúdo
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById("modalDetalhes");
+  if (e.target === modal) {
+    fecharModalDetalhes();
+  }
+});
+
+// Fecha com tecla ESC
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") fecharModalDetalhes();
+});
+function abrirContato() {
+  const linkWhatsApp = "https://wa.me/5517991020080"
+ 
+  window.open(linkWhatsApp, "_blank");
+}
+// ========== FUNÇÕES DO CALENDÁRIO ==========
+function abrirCalendario() {
+  const calendario = document.getElementById("calendario-visita");
+  calendario.classList.remove("hidden");
+}
+
+function fecharCalendario() {
+  const calendario = document.getElementById("calendario-visita");
+  calendario.classList.add("hidden");
+}
+
+function confirmarVisita() {
+  const data = document.getElementById("data-visita").value;
+  if (!data) {
+    alert("Por favor, selecione uma data para a visita.");
+    return;
+  }
+
+  alert(`Visita agendada para o dia ${new Date(data).toLocaleDateString("pt-BR")}!`);
+  fecharCalendario();
+}
