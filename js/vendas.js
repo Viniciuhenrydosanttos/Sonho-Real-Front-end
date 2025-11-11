@@ -8,7 +8,7 @@
     const formEditar = document.getElementById("formEditar");
 
     const TAMANHO_MAXIMO_MB = 20; 
-const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 1024 * 1024;
+const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 2080 * 2080;
 
 
     const filtroCidade = document.getElementById("filtroCidade");
@@ -68,7 +68,7 @@ const TAMANHO_MAXIMO_BYTES = TAMANHO_MAXIMO_MB * 1024 * 1024;
 
       // 🔹 Primeiro envia a foto
       try {
-        const response = await fetch(`${API_URL}/fotos_casa`, {
+        const response = await fetch(`${"http://192.168.1.44:3000"}/fotos_casa`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(foto),

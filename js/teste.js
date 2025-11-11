@@ -307,7 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
 
-    <div class="card-footer">
+    <div class="card-footer"> 
+        <button class="btn-fav" data-id="${imovel.id_imovel}" title="Favoritar "></button>
       <div class="price">R$ ${String(Number(imovel.preco || 0).toLocaleString("pt-BR"))}</div>
       <button class="btn btn-primary open-hotel"
         data-title="${String(imovel.nome_casa || '')}"
@@ -414,7 +415,65 @@ function abrirContato() {
  
   window.open(linkWhatsApp, "_blank");
 }
+// ============================================
+// ⭐ FAVORITAR IMÓVEIS
+// ============================================
+
+// Função para obter os favoritos do usuário logado
+function getFavoritos() {
+  const user = localStorage.getItem("user");
+  if (!user) return [];
+  return JSON.parse(localStorage.getItem(`favoritos_${user}`) || "[]");
+}
+
+// Função para salvar os favoritos
+function saveFavoritos(favoritos) {
+  const user = localStorage.getItem("user");
+  if (!user) return;
+  localStorage.setItem(`favoritos_${user}`, JSON.stringify(favoritos));
+}
+
+// Alternar favorito (adicionar/remover)
+function toggleFavorito(id_imovel, btn) {
+  exigirLogin(() => {
+    let favoritos = getFavoritos();
+    const index = favoritos.indexOf(id_imovel);
+
+    if (index >= 0) {
+      favoritos.splice(index, 1); // remove
+      btn.classList.remove("favorited");
+    } else {
+      favoritos.push(id_imovel); // adiciona
+      btn.classList.add("favorited");
+    }
+    saveFavoritos(favoritos);
+  });
+}
+
+// Atualiza visualmente os favoritos já salvos
+function atualizarFavoritosUI() {
+  const favoritos = getFavoritos();
+  document.querySelectorAll(".btn-fav").forEach(btn => {
+    const id = parseInt(btn.dataset.id);
+    if (favoritos.includes(id)) {
+      btn.classList.add("favorited");
+    } else {
+      btn.classList.remove("favorited");
+    }
+  });
+}
+
   fetchImoveis().then(renderImoveis);
+  setTimeout(() => {
+  document.querySelectorAll(".btn-fav").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = parseInt(btn.dataset.id);
+      toggleFavorito(id, btn);
+    });
+  });
+  atualizarFavoritosUI();
+}, 100);
+
 // ========== FUNÇÕES DO CALENDÁRIO ==========
 function abrirCalendario() {
   const calendario = document.getElementById("calendario-visita");

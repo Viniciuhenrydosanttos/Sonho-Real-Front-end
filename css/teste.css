@@ -785,104 +785,84 @@ column; gap: 12px; }
 /* ===============================
    BOTÕES DO MODAL DO IMÓVEL
    =============================== */
+
+/* 🔘 Botões pequenos e equilibrados */
 #btn-solicitar,
 #btn-mensagem {
-  width: 45%;
-  padding: 6px 0;
-  border-radius: 8px;
+  width: auto; /* não ocupa metade da tela */
+  min-width: 100px;
+  padding: 5px 10px;
+  border-radius: 6px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  font-size: 13px;
+  font-size: 11.5px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
 
 /* 🔹 BOTÃO DE SOLICITAR VISITA */
 #btn-solicitar.btn-primary {
-  background: linear-gradient(135deg, #b50aff, #8e0de9);
+  background: linear-gradient(135deg, #5b2be0, #7a3ef7); /* roxo moderno */
   border: none;
   color: #fff;
 }
 
 #btn-solicitar.btn-primary:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #8e0de9, #b50aff);
-  box-shadow: 0 4px 10px rgba(181, 10, 255, 0.3);
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #7a3ef7, #5b2be0);
+  box-shadow: 0 3px 8px rgba(123, 63, 247, 0.25);
+}
+/* 🔺 BOTÃO FECHAR MODAL */
+#closeModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(91, 43, 224, 0.12); /* leve tom do roxo */
+  color: #5b2be0;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+#closeModal:hover {
+  background: #5b2be0;
+  color: #fff;
+  transform: scale(1.1) rotate(8deg);
+  box-shadow: 0 4px 10px rgba(91, 43, 224, 0.3);
 }
 
 /* 🔸 BOTÃO DE MENSAGEM */
 #btn-mensagem.btn-outline {
   background: transparent;
-  border: 1.5px solid #b50aff;
-  color: #b50aff;
+  border: 1.3px solid #5b2be0;
+  color: #5b2be0;
 }
 
 #btn-mensagem.btn-outline:hover {
-  background: #b50aff;
+  background: #5b2be0;
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(181, 10, 255, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(91, 43, 224, 0.25);
 }
 
-/* 💎 Ajuste do container */
+/* 💎 Container dos botões */
 .btn-container {
   display: flex;
-  justify-content: space-between;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
   margin-top: 8px;
-}
-
-
-/* Container opcional (para alinhamento lado a lado) */
-.modal-actions {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  margin-top: 20px;
   flex-wrap: wrap;
-}
-
-.btn-visita {
-  flex: 1;
-  background: #C9A86A;
-  color: #fff;
-  border: none;
-  padding: 14px 0;
-  border-radius: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-}
-.btn-visita:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(31, 58, 95, 0.3);
-  background: #b89959; /* tom mais elegante ao passar */
-}
-
-#closeModal {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent; /* totalmente transparente */
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 22px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  z-index: 10;
-}
-
-#closeModal:hover {
-  background: #1F3A5F;
-  transform: scale(1.1) rotate(5deg);
 }
 
 
@@ -952,6 +932,49 @@ column; gap: 12px; }
   opacity: 0;
   pointer-events: none;
   transition: all 0.4s ease;
+}
+
+.btn-fav {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #bbb;
+  transition: transform 0.25s ease, color 0.25s ease;
+  position: relative;
+  padding: 4px;
+}
+
+/* Coração padrão (vazio) */
+.btn-fav::before {
+  content: "♡";
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover */
+.btn-fav:hover::before {
+  color: #ff4b5c;
+  transform: scale(1.2);
+}
+
+/* Quando favoritado (cheio) */
+.btn-fav.favorited::before {
+  content: "♥";
+  color: #e63946;
+  text-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+/* Batida leve ao favoritar */
+.btn-fav.favorited {
+  animation: pulseFav 0.25s ease;
+}
+
+@keyframes pulseFav {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
 }
 
 /* ==============================

@@ -280,4 +280,35 @@ function confirmarVisita() {
 
   alert(`Visita agendada para o dia ${new Date(data).toLocaleDateString("pt-BR")}!`);
   fecharCalendario();
+}// ================================
+// 🩷 BOTÃO DE FAVORITAR (CARDS E MODAL)
+// ================================
+function toggleFavorito(el, idImovel) {
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  if (favoritos.includes(idImovel)) {
+    favoritos = favoritos.filter(id => id !== idImovel);
+    el.classList.remove("favoritado");
+  } else {
+    favoritos.push(idImovel);
+    el.classList.add("favoritado");
+  }
+
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+}
+// ================================
+// 🩷 BOTÃO DE FAVORITAR (CARDS E MODAL)
+// ================================
+function toggleFavorito(el, idImovel) {
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  if (favoritos.includes(idImovel)) {
+    favoritos = favoritos.filter(id => id !== idImovel);
+    el.classList.remove("favoritado");
+  } else {
+    favoritos.push(idImovel);
+    el.classList.add("favoritado");
+  }
+
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
 }
