@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "http://192.168.1.44:3000"; // Altere conforme seu backend
+  const API_URL = "http://192.168.1.44:3000";
   const uploadInput = document.getElementById("fileInput");
   const preview = document.getElementById("preview");
   const placeholderText = document.getElementById("placeholderText");
@@ -9,6 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const formEditar = document.getElementById("formEditar");
 
   let base64Imagens = [];
+
+  // ==============================
+  // 📋 Lista de administradores
+  // ==============================
+  const ADMINS = [
+    "IsabelaRF24@gmail.com.br",
+    "ViniciusHenry@gmail.com.br",
+    "KauanHenrique@gmail.com.br",
+    "Marialulu@gmail.com.br",
+    "MariaJuliaDePaula@gmail.com.br",
+    "AnaBeatriz@gmail.com.br"
+  ];
 
   // ==============================
   // 📸 Upload de imagens
@@ -44,11 +56,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ==============================
-  // 🚀 Cadastrar imóvel + imagens
+  // 🚀 Publicar imóvel
   // ==============================
   window.publicar = async function publicar() {
     try {
-      const nome_casa = document.querySelector(".titulo").textContent.trim();
+      const usuarioLogado = localStorage.getItem("user");
+      if (!usuarioLogado) {
+        alert("Você precisa estar logado para publicar um imóvel!");
+        return;
+      }
+
+const nome_casa = document.getElementById("titulo_anuncio").value.trim();
       const tipo_moradia = document.getElementById("tipo_moradia").value;
       const finalidade = document.getElementById("finalidade").value;
       const preco = document.getElementById("preco").value;
@@ -63,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const vagas_garagem = document.getElementById("vagas").value;
       const disponibilidade = "Disponível";
 
-      // 1️⃣ Cadastrar o imóvel
       const res = await fetch(`${API_URL}/imovel/cadastrar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
           banheiros,
           vagas_garagem,
           disponibilidade,
+          usuario: usuarioLogado // 👈 associa o e-mail do dono
         }),
       });
 
@@ -89,12 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert("Imóvel cadastrado com sucesso!");
 
-      // 2️⃣ Buscar o ID do último imóvel cadastrado
       const imoveis = await (await fetch(`${API_URL}/imoveis`)).json();
       const ultimo = imoveis[imoveis.length - 1];
       const id_imovel = ultimo.id_imovel;
 
-      // 3️⃣ Enviar as fotos
       for (const img of base64Imagens) {
         await fetch(`${API_URL}/fotos_casa`, {
           method: "POST",
@@ -124,12 +140,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   async function carregarImoveis() {
     try {
+      const user = localStorage.getItem("user");
+      if (!user) {
+        alert("Você precisa estar logado!");
+        return;
+      }
+
+      const ehAdmin = ADMINS.includes(user);
       const imoveis = await (await fetch(`${API_URL}/imoveis`)).json();
       const imagens = await (await fetch(`${API_URL}/fotos_casa`)).json();
 
       cardContainer.innerHTML = "";
 
-      imoveis.forEach((casa) => {
+      // 🔎 Se for usuário normal, mostra só os imóveis dele
+      const imoveisFiltrados = ehAdmin
+        ? imoveis
+        : imoveis.filter((i) => i.usuario === user);
+
+      if (imoveisFiltrados.length === 0) {
+        cardContainer.innerHTML = "<p style='color:gray'>Nenhum imóvel encontrado.</p>";
+        return;
+      }
+
+      imoveisFiltrados.forEach((casa) => {
         const imgCasa = imagens.find((img) => img.id_imovel === casa.id_imovel);
         const src = imgCasa
           ? `data:${imgCasa.mimetype};base64,${imgCasa.data}`
@@ -150,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cardContainer.appendChild(card);
       });
 
-      // eventos de edição e exclusão
       document.querySelectorAll(".btn-editar").forEach((btn) => {
         btn.addEventListener("click", () => abrirModalEditar(btn.dataset.id));
       });
@@ -187,8 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
   formEditar.addEventListener("submit", async (e) => {
     e.preventDefault();
     const id = formEditar.dataset.id;
-
     const dados = {};
+
     for (let campo of formEditar.elements) {
       if (campo.name) dados[campo.name] = campo.value;
     }
@@ -208,14 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   async function excluirImovel(id) {
     if (!confirm("Deseja realmente excluir este imóvel?")) return;
-
     await fetch(`${API_URL}/imovel/${id}`, { method: "DELETE" });
     alert("Imóvel excluído com sucesso!");
     carregarImoveis();
   }
 
   // ==============================
-  // Inicialização
+  // 🚀 Inicialização
   // ==============================
   carregarImoveis();
 });
