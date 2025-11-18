@@ -714,9 +714,7 @@ column; gap: 12px; }
   box-shadow: 0 10px 24px rgba(31, 58, 95, 0.25);
 }
 
-/* ================================
-   INFORMAÇÕES DO IMÓVEL
-=================================== */
+
 .hotel-info {
   background-color: transparent;
   border-radius: 0;
@@ -726,7 +724,7 @@ column; gap: 12px; }
   overflow: hidden;
 }
 .hotel-info.show {
-  max-height: 600px; /* expande suavemente */
+  max-height: 600px; 
   overflow-y: auto;
 }
 .hotel-title {

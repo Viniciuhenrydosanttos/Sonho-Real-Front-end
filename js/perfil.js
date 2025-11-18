@@ -1,67 +1,67 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const perfilContainer = document.getElementById("perfilContainer");
+  const userId = localStorage.getItem("userId");
 
-  // Verifica se o usuário está logado
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  if (!userData) {
-    perfilContainer.innerHTML = `<p style="text-align:center;">Você precisa estar logado para acessar o perfil.</p>`;
-    return;
-  }
+  // if (!userId) {
+  //   alert("Usuário não logado!");
+  //   window.location.href = "homepage.html";
+  //   return;
+  // }
 
-  // Busca dados do usuário no backend
   try {
-    const res = await fetch(`http://192.168.1.44:3000/people/${userData.id}`);
-    if (!res.ok) throw new Error("Erro ao buscar perfil");
-    const usuario = await res.json();
+    // Pega dados do usuário
+    const resUser = await fetch(`https://backrender-o56j.onrender.com/user/${userId}`);
+    const user = await resUser.json();
 
-    // Busca imóveis do usuário (se tiver)
-    const resImoveis = await fetch(`http://192.168.1.44:3000/imoveis?dono=${usuario.id}`);
-    const meusImoveis = resImoveis.ok ? await resImoveis.json() : [];
+    document.getElementById("nome").value = user.nome || "";
+    document.getElementById("email").value = user.email || "";
 
-    perfilContainer.innerHTML = `
-      <div class="perfil-wrapper">
-        <div class="perfil-header">
-          <img src="https://i.pravatar.cc/150?u=${usuario.email}" alt="Foto do usuário">
-          <div>
-            <h2>${usuario.email.split("@")[0]}</h2>
-            <div class="perfil-info">
-              <p><strong>Email:</strong> ${usuario.email}</p>
-              <p><strong>Função:</strong> ${usuario.funcao}</p>
-            </div>
-            <div class="btns-perfil">
-              <button class="btn editar">Editar Perfil</button>
-              <button class="btn sair">Sair</button>
-            </div>
+    // Pega favoritos
+    const resFav = await fetch(`https://backrender-o56j.onrender.com/favorites/${userId}`);
+    const favoritos = await resFav.json();
+
+    const lista = document.querySelector(".lista-favoritos");
+    lista.innerHTML = "";
+
+    if (favoritos.length === 0) {
+      lista.innerHTML = "<p>Você ainda não favoritou nenhum imóvel.</p>";
+    } else {
+      favoritos.forEach((imovel) => {
+        const div = document.createElement("div");
+        div.classList.add("imovel");
+        div.innerHTML = `
+          <img src="${imovel.imagem}" alt="${imovel.titulo}">
+          <div class="imovel-info">
+            <h3>${imovel.titulo}</h3>
+            <p>R$ ${imovel.preco.toLocaleString("pt-BR")}</p>
           </div>
-        </div>
+        `;
+        lista.appendChild(div);
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao carregar perfil:", error);
+  }
+});
 
-        <section class="meus-imoveis">
-          <h3>Meus Imóveis</h3>
-          <div class="grid-imoveis">
-            ${
-              meusImoveis.length
-                ? meusImoveis.map(imovel => `
-                  <div class="card-imovel">
-                    <img src="img/padrao.jpg" alt="${imovel.nome_casa}">
-                    <div class="card-content">
-                      <h4>${imovel.nome_casa}</h4>
-                      <p>${imovel.cidade}</p>
-                      <p><strong>R$ ${Number(imovel.preco).toLocaleString("pt-BR")}</strong></p>
-                    </div>
-                  </div>`).join("")
-                : "<p style='grid-column:1/-1;color:#777;'>Nenhum imóvel cadastrado.</p>"
-            }
-          </div>
-        </section>
-      </div>
-    `;
+// Atualizar nome/senha
+document.getElementById("formPerfil").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    document.querySelector(".btn.sair").addEventListener("click", () => {
-      localStorage.removeItem("userData");
-      window.location.href = "index.html";
+  const userId = localStorage.getItem("userId");
+  const nome = document.getElementById("nome").value;
+  const senha = document.getElementById("senha").value;
+
+  try {
+    const res = await fetch(`https://backrender-o56j.onrender.com/user/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, senha }),
     });
-  } catch (err) {
-    console.error(err);
-    perfilContainer.innerHTML = `<p>Erro ao carregar perfil.</p>`;
+
+    const msg = await res.text();
+    alert(msg);
+    if (res.ok) location.reload();
+  } catch (error) {
+    console.error("Erro ao atualizar perfil:", error);
   }
 });

@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil — Isaimóveis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="perfil.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil do Usuário</title>
+  <link rel="stylesheet" href="../css/perfil.css" />
 </head>
 <body>
-  <div id="perfilContainer" class="perfil-wrapper">
-    <p>Carregando perfil...</p>
+  <div class="container">
+    <section class="perfil">
+      <h2>Meu perfil 👤</h2>
+
+      <form id="formPerfil">
+        <label for="nome">📄 Nome:</label>
+        <input type="text" id="nome" name="nome" required />
+
+        <label for="email">📌 Email:</label>
+        <input type="email" id="email" name="email" disabled />
+
+        <label for="senha">🔒 Nova senha:</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite uma nova senha se quiser mudar" />
+
+        <button type="submit">Salvar alterações</button>
+      </form>
+    </section>
+
+    <section class="favoritos">
+      <h2>Meus Favoritos ❤</h2>
+      <div class="lista-favoritos"></div>
+    </section>
   </div>
 
-  <script src="perfil.js"></script>
+  <script src="../js/perfil.js"></script>
 </body>
 </html>

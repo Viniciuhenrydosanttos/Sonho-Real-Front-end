@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "http://192.168.1.44:3000";
+  const API_URL = "https://sonho-real-back.onrender.com";
   const uploadInput = document.getElementById("fileInput");
   const preview = document.getElementById("preview");
   const placeholderText = document.getElementById("placeholderText");
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-const nome_casa = document.getElementById("titulo_anuncio").value.trim();
+      const nome_casa = document.getElementById("titulo_anuncio").value.trim();
       const tipo_moradia = document.getElementById("tipo_moradia").value;
       const finalidade = document.getElementById("finalidade").value;
       const preco = document.getElementById("preco").value;
@@ -99,7 +99,7 @@ const nome_casa = document.getElementById("titulo_anuncio").value.trim();
           banheiros,
           vagas_garagem,
           disponibilidade,
-          usuario: usuarioLogado // 👈 associa o e-mail do dono
+          usuario: usuarioLogado
         }),
       });
 
@@ -152,7 +152,6 @@ const nome_casa = document.getElementById("titulo_anuncio").value.trim();
 
       cardContainer.innerHTML = "";
 
-      // 🔎 Se for usuário normal, mostra só os imóveis dele
       const imoveisFiltrados = ehAdmin
         ? imoveis
         : imoveis.filter((i) => i.usuario === user);
@@ -163,32 +162,42 @@ const nome_casa = document.getElementById("titulo_anuncio").value.trim();
       }
 
       imoveisFiltrados.forEach((casa) => {
-        const imgCasa = imagens.find((img) => img.id_imovel === casa.id_imovel);
-        const src = imgCasa
-          ? `data:${imgCasa.mimetype};base64,${imgCasa.data}`
-          : "../img/no-image.jpg";
+
+        // 🔎 Corrigido: pega TODAS imagens do ID certo
+        const imagensDaCasa = imagens.filter(
+          (img) => Number(img.id_imovel) === Number(casa.id_imovel)
+        );
+
+        let src = "../img/no-image.jpg";
+        if (imagensDaCasa.length > 0) {
+          src = `data:${imagensDaCasa[0].mimetype};base64,${imagensDaCasa[0].data}`;
+        }
 
         const card = document.createElement("div");
         card.classList.add("card-imovel");
+
+        const podeEditar = ehAdmin || casa.usuario === user;
+
         card.innerHTML = `
           <img src="${src}" alt="${casa.nome_casa}">
           <h3>${casa.nome_casa}</h3>
           <p>${casa.cidade} - ${casa.estado}</p>
           <p><strong>R$ ${Number(casa.preco).toLocaleString("pt-BR")}</strong></p>
           <div class="acoes">
-            <button class="btn-editar" data-id="${casa.id_imovel}">✏️ Editar</button>
-            <button class="btn-excluir" data-id="${casa.id_imovel}">🗑️ Excluir</button>
+            <button class="btn-editar" data-id="${casa.id_imovel}" ${!podeEditar ? "disabled style='opacity:0.5;cursor:not-allowed'" : ""}>✏️ Editar</button>
+            <button class="btn-excluir" data-id="${casa.id_imovel}" ${!podeEditar ? "disabled style='opacity:0.5;cursor:not-allowed'" : ""}>🗑️ Excluir</button>
           </div>
         `;
+
         cardContainer.appendChild(card);
       });
 
       document.querySelectorAll(".btn-editar").forEach((btn) => {
-        btn.addEventListener("click", () => abrirModalEditar(btn.dataset.id));
+        if (!btn.disabled) btn.addEventListener("click", () => abrirModalEditar(btn.dataset.id));
       });
 
       document.querySelectorAll(".btn-excluir").forEach((btn) => {
-        btn.addEventListener("click", () => excluirImovel(btn.dataset.id));
+        if (!btn.disabled) btn.addEventListener("click", () => excluirImovel(btn.dataset.id));
       });
     } catch (err) {
       console.error(err);
